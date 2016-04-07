@@ -26,5 +26,8 @@
   "scripts": {
     "postdeploy": "python manage.py migrate"
   },
-  "addons": []
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "heroku-redis:hobby-dev"
+  ]
 }
