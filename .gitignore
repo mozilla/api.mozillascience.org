@@ -61,5 +61,9 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
+# testing files
+dump_*
+*.sqlite3
+
 #Mac Garbage
 **/.DS_Store
