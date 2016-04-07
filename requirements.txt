@@ -1,10 +1,1 @@
-beautifulsoup4==4.4.1
-colorama==0.3.3
-Django==1.9.5
-djangorestframework==3.3.3
-ffprobe==0.5
-instantmusic==1.2
-pinggraph==0.0.8
-virtualenv==15.0.1
-wheel==0.26.0
-youtube-dl==2015.10.9
+-r requirements/production.txt
