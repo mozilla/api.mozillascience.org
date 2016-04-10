@@ -67,3 +67,6 @@ dump_*
 
 #Mac Garbage
 **/.DS_Store
+
+# Environment
+**/.env
