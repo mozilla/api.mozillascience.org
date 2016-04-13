@@ -47,9 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_docs',
-    'users',
-    'projects',
-    'events',
+    'scienceapi.users',
+    'scienceapi.projects',
+    'scienceapi.events',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -64,7 +64,7 @@ MIDDLEWARE_CLASSES = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'scienceapi.urls'
 
 TEMPLATES = [
     {
@@ -99,6 +99,7 @@ DATABASES = {
     }
 }
 
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # Password validation
