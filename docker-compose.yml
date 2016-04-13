@@ -1,0 +1,25 @@
+app:
+  build: ./app
+  env_file: .env
+  ports:
+    - "80:7001"
+  links:
+    - postgres
+  volumes:
+    - ./app:/app
+  command: python /app/manage.py runserver 0:7001
+
+postgres:
+  restart: always
+  image: postgres:latest
+  volumes_from:
+    - data
+  ports:
+    - "5432:5432"
+
+data:
+  restart: always
+  image: busybox
+  volumes:
+    - /var/lib/postgresql
+  command: "true"

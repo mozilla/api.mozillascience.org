@@ -16,7 +16,6 @@ import environ
 app = environ.Path(__file__) - 2
 root = app - 1
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(app('.env'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     'scienceapi.users',
     'scienceapi.projects',
     'scienceapi.events',
+    'gunicorn',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -89,8 +89,9 @@ WSGI_APPLICATION = 'scienceapi.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db("DATABASE_URL", default="postgres:///mozillascience"),
+    'default': env.db("DATABASE_URL"),
 }
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 

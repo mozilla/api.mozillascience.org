@@ -1,7 +1,0 @@
--r common.txt
-
-# WSGI to spin up multiple server workers
-gunicorn==19.4.5
-
-# Serve static files
-whitenoise==3.0
