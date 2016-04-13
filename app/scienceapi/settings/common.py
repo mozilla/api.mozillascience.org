@@ -16,7 +16,6 @@ import environ
 app = environ.Path(__file__) - 2
 root = app - 1
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(app('.env'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
@@ -89,14 +88,7 @@ WSGI_APPLICATION = 'wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASS'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': '5432',
-    }
+    'default': env.db("DATABASE_URL"),
 }
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
