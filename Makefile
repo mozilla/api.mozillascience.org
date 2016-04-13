@@ -12,3 +12,6 @@ migrate: build
 
 shell: build
 	docker-compose run app python manage.py shell
+
+env:
+	cp env.sample .env
