@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'scienceapi.users',
     'scienceapi.projects',
     'scienceapi.events',
+    'gunicorn',
 ]
 
 MIDDLEWARE_CLASSES = [
