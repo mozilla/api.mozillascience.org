@@ -70,3 +70,6 @@ dump_*
 
 # Environment
 **/.env
+
+# Static files from python manage.py collectstatic
+app/staticfiles/

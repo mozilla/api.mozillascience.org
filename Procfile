@@ -1,1 +1,1 @@
-web: gunicorn scienceapi.wsgi:application
+web: cd app && gunicorn scienceapi.wsgi:application

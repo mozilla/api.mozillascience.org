@@ -1,8 +1,10 @@
 {
   "name": "api.mozillascience.org",
   "description": "API server for science.mozilla.org",
-  "image": "heroku/python",
   "addons": [
     "heroku-postgresql"
-  ]
+  ],
+  "scripts": {
+    "postdeploy": "python app/manage.py migrate"
+  }
 }
