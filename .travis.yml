@@ -1,0 +1,26 @@
+sudo: false
+
+language: python
+
+python:
+  - "3.5"
+
+services: postgresql
+
+# command to install dependencies
+install: "pip install -r requirements.txt"
+
+before_script:
+  - pip install coverage flake8
+  - psql -c "CREATE DATABASE mozillascience;" -U postgres
+
+# command to run tests
+script:
+  - flake8 .
+  - python app/manage.py test
+
+env:
+  global:
+    - DEBUG=True
+    - DJANGO_SECRET_KEY=secret
+    - DATABASE_URL=postgres://postgres:5432@localhost:5432/mozillascience
