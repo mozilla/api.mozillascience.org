@@ -1,3 +1,32 @@
-# from django.db import models
+from django.db import models
+from django.utils import timezone
 
-# Create your models here.
+class Project(models.Model):
+    """
+    An open-source project on the Mozilla Science website.
+    """
+    name = models.CharField(max_length=300)
+    project_url = models.URLField(max_length=500, null=True,
+        help_text='URL to the project\'s landing page on the web')
+    slug = models.SlugField(max_length=150, null=True,
+        verbose_name='Mozilla Science URL Slug',
+        help_text='Slug appended to the Mozilla Science project\'s '
+                  'url that represents this project')
+    github_owner = models.CharField(max_length=200)
+    github_repository = models.CharField(max_length=300)
+    image_url = models.URLField(max_length=500, null=True,
+        help_text='URL to project\'s image.')
+    institution = models.CharField(max_length=300, null=True,
+        help_text='Institution/Organization this project belongs to')
+    description = models.TextField(blank=True)
+    short_description = models.TextField(max_length=300, blank=True)
+    status = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    license = models.CharField(max_length=50, null=True)
+
+    class Meta:
+        get_latest_by = 'date_created'
+
+    def __str__(self):
+        return str(self.name)
