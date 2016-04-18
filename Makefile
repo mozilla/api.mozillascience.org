@@ -13,7 +13,7 @@ migrate: build
 shell: build
 	docker-compose run web python manage.py shell
 
-env:
+cpenv:
 	cp env.sample .env
 
 createsuperuser:
