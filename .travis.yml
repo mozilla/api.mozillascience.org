@@ -17,7 +17,7 @@ before_script:
 
 # command to run tests
 script:
-  - flake8 .
+  - flake8 . --config=./app/tox.ini
   - python app/manage.py test
 
 env:
