@@ -44,3 +44,21 @@ This will create a simple environment for local development then you can start w
 ```
 make up
 ```
+
+### Running python commands
+
+Sometimes you will need to run a specific python/django commands in the container, to accomplish this you will need to run:
+
+```
+docker-compose run web <your command here>
+```
+
+NOTE: Replace `<your command here>` with an actual command, for example: `docker-compose run web echo 'hello world'`
+
+### Database migration
+
+You might need to run the migration script from time to time to keep up to date with the model, and to accomplish that you can simply run:
+
+```
+make migrate
+```
