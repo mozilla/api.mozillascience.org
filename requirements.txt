@@ -11,3 +11,7 @@ whitenoise==3.0
 psycopg2==2.6.1
 six==1.10.0
 ipython==4.1.2
+
+# Testing
+flake8==2.5.4
+coverage==4.0.3

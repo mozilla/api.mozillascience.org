@@ -5,7 +5,7 @@ up: build
 	docker-compose up
 
 test: build
-	docker-compose run web sh -c "pip install coverage flake8 && flake8 . && python /app/manage.py test"
+	docker-compose run web sh -c "flake8 . && python /app/manage.py test"
 
 migrate: build
 	docker-compose run web python manage.py migrate
