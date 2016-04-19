@@ -66,3 +66,8 @@ docker-compose run web <your command here>
 
 NOTE: Replace `<your command here>` with an actual command, for example: `docker-compose run web echo 'hello world'`
 
+### Deployment
+
+The API server uses [Heroku](https://www.heroku.com/) for its deployment services, and the current workflow is that
+every push to `master` will deploy a new version of this app to the staging server on heroku (assuming travis CI passes before it deploys).
+The production server is deployed from the staging server using the Heroku [Pipelines](https://devcenter.heroku.com/articles/pipelines) to promote to production.
