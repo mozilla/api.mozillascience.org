@@ -69,5 +69,5 @@ NOTE: Replace `<your command here>` with an actual command, for example: `docker
 ### Deployment
 
 The API server uses [Heroku](https://www.heroku.com/) for its deployment services, and the current workflow is that
-every push to `master` will deploy a new version of this app to heroku (assuming travis CI to passed before it deploys).
-The production server will be deployed until we use the Heroku's [Pipelines](https://devcenter.heroku.com/articles/pipelines) to promote to production.
+every push to `master` will deploy a new version of this app to the staging server on heroku (assuming travis CI passes before it deploys).
+The production server is deployed from the staging server using the Heroku [Pipelines](https://devcenter.heroku.com/articles/pipelines) to promote to production.
