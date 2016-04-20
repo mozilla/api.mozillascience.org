@@ -7,6 +7,9 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=150)
 
+    class Meta:
+        verbose_name_plural = 'categories'
+
     def __str__(self):
         return str(self.name)
 
@@ -54,7 +57,10 @@ class Project(models.Model):
     )
     description = models.TextField(blank=True)
     short_description = models.TextField(max_length=300, blank=True)
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(
+        default=False,
+        help_text='Has this project been Approved or not'
+    )
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     license = models.CharField(max_length=50, null=True)
