@@ -1,3 +1,14 @@
-# from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from scienceapi.projects.models import Project
+from scienceapi.projects.serializers import ProjectWithDetailsSerializer
+
+
+class ProjectsListView(ListAPIView):
+    """
+    A view that permits a GET to allow listing all the projects
+    in the database
+    """
+    queryset = Project.objects.all()
+    serializer_class = ProjectWithDetailsSerializer
+    pagination_class = None
