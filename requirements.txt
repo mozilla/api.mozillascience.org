@@ -5,6 +5,9 @@ djangorestframework==3.3.3
 drfdocs==0.0.9
 gunicorn==19.4.5
 
+# CORS
+django-cors-headers==1.1.0
+
 # Serve static files
 whitenoise==3.0
 

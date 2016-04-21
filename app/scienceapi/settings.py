@@ -14,7 +14,9 @@ import environ
 
 app = environ.Path(__file__) - 1
 root = app - 1
-env = environ.Env(DEBUG=(bool, False), ALLOWED_HOSTS=(list, []))
+env = environ.Env(DEBUG=(bool, False),
+                  ALLOWED_HOSTS=(list, []),
+                  CORS_WHITELIST=(list, []))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
@@ -50,12 +52,14 @@ INSTALLED_APPS = [
     'scienceapi.projects',
     'scienceapi.events',
     'gunicorn',
+    'corsheaders',
 ]
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -157,3 +161,6 @@ REST_FRAMEWORK = {
 }
 
 STATIC_ROOT = root('staticfiles')
+
+# CORS
+CORS_ORIGIN_WHITELIST = env('CORS_WHITELIST')
