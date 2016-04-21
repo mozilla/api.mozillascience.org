@@ -26,9 +26,15 @@ class ProjectWithDetailsSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
     links = ResourceLinkSerializer(many=True)
-    github_contributors = GithubAPI
-        .get_contributors(github_owner + '/' + github_repository)
+    github_contributors = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
         fields = '__all__'
+
+    def get_github_contributors(self, obj):
+        return GithubAPI.get_contributors(
+            obj.github_owner +
+            '/' +
+            obj.github_repository
+        )
