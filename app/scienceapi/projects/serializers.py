@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from scienceapi.utility.github import GithubAPI
 from scienceapi.projects.models import (
     Project,
     ResourceLink,
@@ -25,6 +26,8 @@ class ProjectWithDetailsSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
     links = ResourceLinkSerializer(many=True)
+    github_contributors = GithubAPI
+        .get_contributors(github_owner + '/' + github_repository)
 
     class Meta:
         model = Project
