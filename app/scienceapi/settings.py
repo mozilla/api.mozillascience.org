@@ -157,7 +157,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
-    'PAGE_SIZE': 10
+    'ORDERING_PARAM': 'sort',
+    'PAGE_SIZE': 10,
 }
 
 STATIC_ROOT = root('staticfiles')
