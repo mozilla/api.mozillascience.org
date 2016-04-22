@@ -53,6 +53,7 @@ class Project(models.Model):
     institution = models.CharField(
         max_length=300,
         null=True,
+        blank=True,
         help_text='Institution/Organization this project belongs to',
     )
     description = models.TextField(blank=True)
