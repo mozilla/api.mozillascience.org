@@ -66,11 +66,13 @@ class Project(models.Model):
     license = models.CharField(max_length=50, null=True)
     tags = models.ManyToManyField(
         Tag,
-        related_name='projects'
+        related_name='projects',
+        blank=True,
     )
     categories = models.ManyToManyField(
         Category,
-        related_name='projects'
+        related_name='projects',
+        blank=True,
     )
 
     class Meta:
