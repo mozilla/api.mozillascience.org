@@ -7,27 +7,55 @@ class User(models.Model):
     """
     name = models.CharField(max_length=200)
     username = models.CharField(max_length=200)
-    designation = models.CharField(max_length=300)
-    email = models.EmailField()
-    location = models.CharField(max_length=300)
-    biography = models.TextField(blank=True)
+    designation = models.CharField(
+        max_length=300,
+        null=True,
+        blank=True,
+    )
+    email = models.EmailField(
+        null=True,
+        blank=True,
+    )
+    location = models.CharField(
+        max_length=300,
+        null=True,
+        blank=True,
+    )
+    biography = models.TextField(
+        null=True,
+        blank=True,
+    ),
     github_id = models.IntegerField(null=True)
     github_username = models.CharField(max_length=200)
-    twitter_handle = models.CharField(max_length=200)
+    twitter_handle = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
     avatar_url = models.URLField(
         max_length=500,
         null=True,
+        blank=True,
         help_text='URL to user\'s avatar',
     )
     blog = models.URLField(
         max_length=500,
         null=True,
+        blank=True,
         help_text='URL to user\'s blog',
     )
-    company = models.CharField(max_length=300)
+    company = models.CharField(
+        max_length=300,
+        null=True,
+        blank=True,
+    )
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    role = models.CharField(max_length=200)
+    role = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         get_latest_by = 'date_created'
