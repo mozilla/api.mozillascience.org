@@ -1,5 +1,8 @@
 from django.db import models
 
+from scienceapi.users.models import User
+from scienceapi.projects.models import Project
+
 
 class Event(models.Model):
     """
@@ -46,6 +49,25 @@ class Event(models.Model):
     additional_notes = models.TextField(
         blank=True,
         null=True,
+    )
+    created_by = models.ForeignKey(
+        User,
+        related_name='events_created'
+    )
+    attendees = models.ManyToManyField(
+        User,
+        related_name='events_attended',
+        blank=True,
+    )
+    facilitators = models.ManyToManyField(
+        User,
+        related_name='events_facilitated',
+        blank=True,
+    )
+    projects = models.ManyToManyField(
+        Project,
+        related_name='events',
+        blank=True,
     )
 
     class Meta:
