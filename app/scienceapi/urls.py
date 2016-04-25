@@ -19,5 +19,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^projects/', include('scienceapi.projects.urls'))
+    url(r'^projects/', include('scienceapi.projects.urls')),
+    url(r'^users/', include('scienceapi.users.urls')),
 ]

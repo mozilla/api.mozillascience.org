@@ -62,6 +62,7 @@ class User(models.Model):
         Project,
         through='UserProject',
         blank=True,
+        related_name='users'
     )
 
     class Meta:
