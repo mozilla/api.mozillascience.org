@@ -1,1 +1,1 @@
-web: cd app && gunicorn scienceapi.wsgi:application
+web: sh scripts/heroku_startup.sh
