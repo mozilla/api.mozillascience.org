@@ -1,5 +1,7 @@
 from django.db import models
 
+from scienceapi.projects.models import Project
+
 
 class User(models.Model):
     """
@@ -56,9 +58,31 @@ class User(models.Model):
         null=True,
         blank=True,
     )
+    projects = models.ManyToManyField(
+        Project,
+        through='UserProject',
+        blank=True,
+    )
 
     class Meta:
         get_latest_by = 'date_created'
 
     def __str__(self):
         return str(self.username)
+
+
+class UserProject(models.Model):
+    """
+    A junction model that connects users to projects
+    and vice-versa.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    role = models.CharField(
+        max_length=20,
+        choices=(
+            ('LEAD', 'Lead'),
+            ('CONTRIBUTOR', 'Contributor')
+        ),
+        default='CONTRIBUTOR',
+    )
