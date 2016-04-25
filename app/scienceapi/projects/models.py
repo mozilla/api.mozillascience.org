@@ -34,11 +34,13 @@ class Project(models.Model):
     project_url = models.URLField(
         max_length=500,
         null=True,
+        blank=True,
         help_text='URL to the project\'s landing page on the web',
     )
     slug = models.SlugField(
         max_length=150,
         null=True,
+        blank=True,
         verbose_name='Mozilla Science URL Slug',
         help_text='Slug appended to the Mozilla Science project\'s '
                   'url that represents this project',
@@ -48,6 +50,7 @@ class Project(models.Model):
     image_url = models.URLField(
         max_length=500,
         null=True,
+        blank=True,
         help_text='URL to project\'s image.',
     )
     institution = models.CharField(
@@ -56,15 +59,26 @@ class Project(models.Model):
         blank=True,
         help_text='Institution/Organization this project belongs to',
     )
-    description = models.TextField(blank=True)
-    short_description = models.TextField(max_length=300, blank=True)
+    description = models.TextField(
+        blank=True,
+        null=True,
+    )
+    short_description = models.TextField(
+        max_length=300,
+        blank=True,
+        null=True,
+    )
     status = models.BooleanField(
         default=False,
         help_text='Has this project been Approved or not'
     )
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    license = models.CharField(max_length=50, null=True)
+    license = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+    )
     tags = models.ManyToManyField(
         Tag,
         related_name='projects',

@@ -18,3 +18,6 @@ cpenv:
 
 createsuperuser:
 	docker-compose run web python manage.py createsuperuser
+
+cmigrate: build
+	docker-compose run web ./manage.py makemigrations
