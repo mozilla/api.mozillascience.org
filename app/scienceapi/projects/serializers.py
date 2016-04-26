@@ -4,6 +4,7 @@ from scienceapi.utility.github import GithubAPI
 from scienceapi.projects.models import (
     Project,
     ResourceLink,
+    Category,
 )
 
 
@@ -15,6 +16,14 @@ class ResourceLinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResourceLink
         fields = ('url', 'title')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    """
+    Serializes a list of categories from the model
+    """
+    class Meta:
+        model = Category
 
 
 class ProjectWithDetailsSerializer(serializers.ModelSerializer):
