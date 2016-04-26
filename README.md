@@ -40,6 +40,15 @@ make cpenv
 ```
 This will create a simple environment for local development then you can start working on the project by running this command:
 
+## Environment Variables
+
+|Variable|Value|About|
+|--------|-----|-----|
+| GH_TOKEN | String | Optional, token only required if you are going to be using it extensively.|
+| DATABASE_URL | URL | Required: URL to your postgres database e.g. `postgres://<USER>:<PASSWORD>@<HOSTNAME>:<PORT>/<DBNAME>`|
+| DJANGO_SECRET_KEY | String | Required: anything that is something people can't guess!|
+| DEBUG | Boolean | Required: `True` or `False` |
+
 ### Database migration
 
 You'll also need run the migration script from time to time to keep up to date with the model, and to accomplish that you can simply run:

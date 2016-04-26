@@ -1,7 +1,8 @@
 from github import Github, GithubException
+from django.conf import settings
 
 
-instance = Github()
+instance = Github(login_or_token=settings.GH_TOKEN)
 
 
 class GithubAPI:
@@ -10,8 +11,8 @@ class GithubAPI:
         contributors = []
         try:
             response = instance \
-                       .get_repo(owner_and_repo_name) \
-                       .get_contributors()
+                .get_repo(owner_and_repo_name) \
+                .get_contributors()
         except GithubException:
             return contributors
         else:

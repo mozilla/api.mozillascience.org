@@ -16,7 +16,8 @@ app = environ.Path(__file__) - 1
 root = app - 1
 env = environ.Env(DEBUG=(bool, False),
                   ALLOWED_HOSTS=(list, []),
-                  CORS_WHITELIST=(list, []))
+                  CORS_WHITELIST=(list, []),
+                  GH_TOKEN=(str, None))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
@@ -35,6 +36,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
+GH_TOKEN = env('GH_TOKEN')
 
 # Application definition
 
