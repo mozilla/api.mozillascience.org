@@ -32,6 +32,11 @@ class ProjectWithDetailsSerializer(serializers.ModelSerializer):
         read_only=True,
         view_name='user'
     )
+    events = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='event'
+    )
 
     class Meta:
         model = Project
