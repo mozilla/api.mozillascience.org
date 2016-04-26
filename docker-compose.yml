@@ -1,4 +1,6 @@
 web:
+  tty: true
+  stdin_open: true
   build: .
   env_file: .env
   ports:

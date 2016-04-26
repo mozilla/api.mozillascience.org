@@ -6,6 +6,9 @@ from scienceapi.projects.models import Project, Category
 from scienceapi.projects.serializers import (
     ProjectWithDetailsSerializer,
     CategorySerializer,
+    ProjectWithDetailsExpandUserSerializer,
+    ProjectWithDetailsExpandEventSerializer,
+    ProjectWithDetailsExpandAllSerializer,
 )
 
 
@@ -89,10 +92,30 @@ class ProjectView(RetrieveAPIView):
     by providing its `id` as a parameter
 
     Route - `/projects/:id`
+
+    Query Parameters -
+        * `?expandusers` - Forces the response to include basic
+                           user information instead of just
+                           hyperlinking the list of users associated
+                           with this project
     """
     queryset = Project.objects.all()
-    serializer_class = ProjectWithDetailsSerializer
     pagination_class = None
+
+    def get_serializer_class(self):
+        expand = self.request.query_params.get('expand')
+        if expand is not None:
+            expand = expand.split(',')
+            if 'users' in expand and 'events' not in expand:
+                return ProjectWithDetailsExpandUserSerializer
+            elif 'events' in expand and 'users' not in expand:
+                return ProjectWithDetailsExpandEventSerializer
+            elif 'events' in expand and 'users' in expand:
+                return ProjectWithDetailsExpandAllSerializer
+            else:
+                return ProjectWithDetailsSerializer
+        else:
+            return ProjectWithDetailsSerializer
 
 
 class CategoryListView(ListAPIView):
