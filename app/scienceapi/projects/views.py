@@ -49,18 +49,20 @@ class ProjectsListView(ListAPIView):
     A view that permits a GET to allow listing all the projects
     in the database
 
-    Route - `/projects`
+    **Route** - `/projects`
 
-    Query Parameters -
-        * `?search=` - Allows search terms
-        * `?sort=` - Allows sorting of projects.
-                     * date_created - `?sort=date_created`
-                     * date_updated - `?sort=date_updated`
-                     To sort in descending order, prepend the
-                     field with a '-', for e.g. `?sort=-date_updated`
-        * `?tags=` - Allows filtering projects by a specific tag
-        * `?categories=` - Allows filtering projects by a specific
-                           category
+    **Query Parameters** -
+
+    - `?search=` - Allows search terms
+    - `?sort=` - Allows sorting of projects.
+        - date_created - `?sort=date_created`
+        - date_updated - `?sort=date_updated`
+
+        *To sort in descending order, prepend the field with a '-', for e.g.
+        `?sort=-date_updated`*
+
+    - `?tags=` - Allows filtering projects by a specific tag
+    - `?categories=` - Allows filtering projects by a specific category
     """
     queryset = Project.objects.all()
     serializer_class = ProjectWithDetailsSerializer
