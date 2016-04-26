@@ -2,7 +2,8 @@ build:
 	docker-compose build
 
 up: build
-	docker-compose up
+	docker-compose up -d
+	docker attach apimozillascienceorg_web_1
 
 test: build
 	docker-compose run web sh -c "flake8 . && python /app/manage.py test"
