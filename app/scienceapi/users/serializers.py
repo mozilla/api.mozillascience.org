@@ -5,7 +5,7 @@ from scienceapi.users.models import User
 
 class UserWithDetailsSerializer(serializers.ModelSerializer):
     """
-    Serializes a list of users with data including the list of projects
+    Serializes a user with data including the list of projects
     that the user created.
     """
     projects = serializers.HyperlinkedRelatedField(

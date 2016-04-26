@@ -5,7 +5,7 @@ from scienceapi.events.models import Event
 
 class EventWithDetailsSerializer(serializers.ModelSerializer):
     """
-    Serializes a list of events with each event including the
+    Serializes an event with each event including the
     list of projects associated with the event and the users attending
     and facilitating the event
     """

@@ -5,6 +5,7 @@ djangorestframework==3.3.3
 drfdocs==0.0.9
 gunicorn==19.4.5
 django_filter==0.13.0
+markdown==2.6.6
 
 # CORS
 django-cors-headers==1.1.0
