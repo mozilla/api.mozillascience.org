@@ -2,8 +2,11 @@ import django_filters
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework import filters
 
-from scienceapi.projects.models import Project
-from scienceapi.projects.serializers import ProjectWithDetailsSerializer
+from scienceapi.projects.models import Project, Category
+from scienceapi.projects.serializers import (
+    ProjectWithDetailsSerializer,
+    CategorySerializer,
+)
 
 
 class ProjectSearchFilter(filters.SearchFilter):
@@ -89,4 +92,14 @@ class ProjectView(RetrieveAPIView):
     """
     queryset = Project.objects.all()
     serializer_class = ProjectWithDetailsSerializer
+    pagination_class = None
+
+
+class CategoryListView(ListAPIView):
+    """
+    A view that permits a GET to allow listing of all categories
+    in the database
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     pagination_class = None
