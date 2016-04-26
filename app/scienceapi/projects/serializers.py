@@ -6,6 +6,8 @@ from scienceapi.projects.models import (
     ResourceLink,
     Category,
 )
+from scienceapi.users.models import User
+from scienceapi.events.models import Event
 
 
 class ResourceLinkSerializer(serializers.ModelSerializer):
@@ -28,9 +30,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProjectWithDetailsSerializer(serializers.ModelSerializer):
     """
-    Serializes a list of projects with each project including the
+    Serializes a project with embeded information including
     list of tags, categories and links associated with that project
-    as simple strings
+    as simple strings. It also includes a list of hyperlinks to events
+    that are associated with this project as well as hyperlinks to users
+    that are involved with the project
     """
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
@@ -57,3 +61,66 @@ class ProjectWithDetailsSerializer(serializers.ModelSerializer):
             '/' +
             obj.github_repository
         )
+
+
+class UserWithFewDetailsSerializer(serializers.ModelSerializer):
+    """
+    Serializes a user by including only a few details that
+    might be necessary to be known when fetching a project
+    """
+    class Meta:
+        model = User
+        fields = (
+            'id',
+            'username',
+            'github_username',
+            'avatar_url',
+        )
+
+
+class EventWithFewDetailsSerializer(serializers.ModelSerializer):
+    """
+    Serializes an event by including only a few details that
+    might be necessary to be known when fetching a project
+    """
+    class Meta:
+        model = Event
+        fields = (
+            'id',
+            'name',
+            'image_url',
+            'slug',
+        )
+
+
+class ProjectWithDetailsExpandEventSerializer(ProjectWithDetailsSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes a list of hyperlinks to users
+    that are associated with this project and relevant details of every
+    event associated with this project
+    """
+    events = EventWithFewDetailsSerializer(many=True)
+
+
+class ProjectWithDetailsExpandUserSerializer(ProjectWithDetailsSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes a list of hyperlinks to events
+    that are associated with this project and relevant details of every
+    user associated with this project
+    """
+    users = UserWithFewDetailsSerializer(many=True)
+
+
+class ProjectWithDetailsExpandAllSerializer(ProjectWithDetailsSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes relevant details of every
+    user and event associated with this project
+    """
+    events = EventWithFewDetailsSerializer(many=True)
+    users = UserWithFewDetailsSerializer(many=True)
