@@ -6,7 +6,7 @@ from scienceapi.projects.models import (
     ResourceLink,
     Category,
 )
-from scienceapi.users.models import User
+from scienceapi.users.models import UserProject
 from scienceapi.events.models import Event
 
 
@@ -68,13 +68,19 @@ class UserWithFewDetailsSerializer(serializers.ModelSerializer):
     Serializes a user by including only a few details that
     might be necessary to be known when fetching a project
     """
+    id = serializers.ReadOnlyField(source='user.id')
+    username = serializers.ReadOnlyField(source='user.username')
+    github_username = serializers.ReadOnlyField(source='user.github_username')
+    avatar_url = serializers.ReadOnlyField(source='user.avatar_url')
+
     class Meta:
-        model = User
+        model = UserProject
         fields = (
             'id',
             'username',
             'github_username',
             'avatar_url',
+            'role',
         )
 
 
@@ -112,7 +118,10 @@ class ProjectWithDetailsExpandUserSerializer(ProjectWithDetailsSerializer):
     that are associated with this project and relevant details of every
     user associated with this project
     """
-    users = UserWithFewDetailsSerializer(many=True)
+    users = UserWithFewDetailsSerializer(
+        source='userproject_set',
+        many=True,
+    )
 
 
 class ProjectWithDetailsExpandAllSerializer(ProjectWithDetailsSerializer):

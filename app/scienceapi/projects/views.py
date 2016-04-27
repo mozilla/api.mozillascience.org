@@ -97,10 +97,12 @@ class ProjectView(RetrieveAPIView):
 
     **Query Parameters** -
 
-    - `?expandusers` - Forces the response to include basic
-                       user information instead of just
-                       hyperlinking the list of users associated
-                       with this project
+    - `?expand=` - Forces the response to include basic
+                   information about a relation instead of just
+                   hyperlinking the relation associated
+                   with this project.
+                   Currently supported values are `?expand=users`,
+                   `?expand=events` and `?expand=users,events`
 
     """
     queryset = Project.objects.all()
