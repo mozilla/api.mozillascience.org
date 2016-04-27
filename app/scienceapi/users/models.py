@@ -83,7 +83,7 @@ class UserProject(models.Model):
         max_length=20,
         choices=(
             ('Lead', 'Lead'),
-            ('Contributor', 'Contributor')
+            ('Volunteer', 'Volunteer')
         ),
-        default='Contributor',
+        default='Volunteer',
     )

@@ -9,10 +9,6 @@ class EventWithDetailsSerializer(serializers.ModelSerializer):
     list of projects associated with the event and the users attending
     and facilitating the event
     """
-    created_by = serializers.HyperlinkedRelatedField(
-        read_only=True,
-        view_name='user'
-    )
     attendees = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,

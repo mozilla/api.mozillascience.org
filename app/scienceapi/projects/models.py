@@ -39,8 +39,6 @@ class Project(models.Model):
     )
     slug = models.SlugField(
         max_length=150,
-        null=True,
-        blank=True,
         verbose_name='Mozilla Science URL Slug',
         help_text='Slug appended to the Mozilla Science project\'s '
                   'url that represents this project',
@@ -49,8 +47,6 @@ class Project(models.Model):
     github_repository = models.CharField(max_length=300)
     image_url = models.URLField(
         max_length=500,
-        null=True,
-        blank=True,
         help_text='URL to project\'s image.',
     )
     institution = models.CharField(
@@ -68,9 +64,20 @@ class Project(models.Model):
         blank=True,
         null=True,
     )
-    status = models.BooleanField(
-        default=False,
+    status = models.CharField(
+        max_length=50,
+        default='Under Review',
+        choices=(
+            ('Under Review', 'Under Review'),
+            ('Active', 'Active'),
+            ('Completed', 'Completed'),
+            ('Closed', 'Closed'),
+        ),
         help_text='Has this project been Approved or not'
+    )
+    scienctific_benefits = models.TextField(
+        blank=True,
+        null=True,
     )
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)

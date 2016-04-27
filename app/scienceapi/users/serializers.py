@@ -13,11 +13,6 @@ class UserWithDetailsSerializer(serializers.ModelSerializer):
         read_only=True,
         view_name='project'
     )
-    events_created = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='event'
-    )
     events_attended = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,

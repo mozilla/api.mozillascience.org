@@ -50,10 +50,6 @@ class Event(models.Model):
         blank=True,
         null=True,
     )
-    created_by = models.ForeignKey(
-        User,
-        related_name='events_created'
-    )
     attendees = models.ManyToManyField(
         User,
         related_name='events_attended',
