@@ -82,8 +82,8 @@ class UserProject(models.Model):
     role = models.CharField(
         max_length=20,
         choices=(
-            ('LEAD', 'Lead'),
-            ('CONTRIBUTOR', 'Contributor')
+            ('Lead', 'Lead'),
+            ('Contributor', 'Contributor')
         ),
-        default='CONTRIBUTOR',
+        default='Contributor',
     )
