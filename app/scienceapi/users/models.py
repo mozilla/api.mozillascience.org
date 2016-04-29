@@ -26,7 +26,7 @@ class User(models.Model):
     biography = models.TextField(
         null=True,
         blank=True,
-    ),
+    )
     github_id = models.IntegerField(null=True)
     github_username = models.CharField(max_length=200)
     twitter_handle = models.CharField(
