@@ -47,6 +47,8 @@ class Project(models.Model):
     github_repository = models.CharField(max_length=300)
     image_url = models.URLField(
         max_length=500,
+        null=True,
+        blank=True,
         help_text='URL to project\'s image.',
     )
     institution = models.CharField(
