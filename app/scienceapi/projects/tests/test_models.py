@@ -1,5 +1,4 @@
 import factory
-import datetime
 
 from scienceapi.projects.models import Project, ResourceLink
 from scienceapi.users.models import UserProject, User
@@ -32,30 +31,43 @@ class ProjectFactory(factory.DjangoModelFactory):
         lambda o: 'Short description for {a}'.format(a=o.name.lower())
     )
     status = True
-    date_created = datetime.date.today()
-    date_updated = datetime.date.today()
-    license = "MIT"
+    license = 'MIT'
 
     class Meta:
         model = Project
 
 
 class UserFactory(factory.Factory):
-    username = 'john'
-    name = 'Ali'
-    designation = factory.LazyAttribute(lambda o: 'Name!')
+    username = factory.LazyAttribute(lambda o: 'John')
+    designation = factory.LazyAttribute(
+        lambda o: '{a}-designation'.format(a=o.username.lower())
+    )
     email = factory.LazyAttribute(lambda o: '%s@example.com' % o.username)
-    location = factory.LazyAttribute(lambda o: 'Name!')
-    biography = factory.LazyAttribute(lambda o: 'Name!')
+    location = factory.LazyAttribute(
+        lambda o: '{a}-location'.format(a=o.username.lower())
+    )
+    biography = factory.LazyAttribute(
+        lambda o: '{a}-biography'.format(a=o.username.lower())
+    )
     github_id = factory.Sequence(lambda n: str(n))
-    github_username = factory.LazyAttribute(lambda o: 'Name!')
-    twitter_handle = factory.LazyAttribute(lambda o: 'Name!')
-    avatar_url = factory.LazyAttribute(lambda o: 'Name!')
-    blog = factory.LazyAttribute(lambda o: 'Name!')
-    company = factory.LazyAttribute(lambda o: 'Name!')
-    date_created = factory.LazyAttribute(lambda o: 'Name!')
-    date_updated = factory.LazyAttribute(lambda o: 'Name!')
-    role = factory.LazyAttribute(lambda o: 'Name!')
+    github_username = factory.LazyAttribute(
+        lambda o: '{a}-github_username'.format(a=o.username.lower())
+    )
+    twitter_handle = factory.LazyAttribute(
+        lambda o: '{a}-twitter_handle'.format(a=o.username.lower())
+    )
+    avatar_url = factory.LazyAttribute(
+        lambda o: 'http://{a}-avatar_url.com'.format(a=o.username.lower())
+    )
+    blog = factory.LazyAttribute(
+        lambda o: '{a}-blog'.format(a=o.username.lower())
+    )
+    company = factory.LazyAttribute(
+        lambda o: '{a}-company'.format(a=o.username.lower())
+    )
+    role = factory.LazyAttribute(
+        lambda o: '{a}-role'.format(a=o.username.lower())
+    )
 
     class Meta:
         model = User
@@ -64,7 +76,7 @@ class UserFactory(factory.Factory):
 class UserProjectFactory(factory.Factory):
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)
-    role = 'something'
+    role = 'Contributor'
 
     class Meta:
         model = UserProject

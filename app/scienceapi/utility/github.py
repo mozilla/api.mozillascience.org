@@ -20,7 +20,6 @@ def get_contributors(owner, repository):
         )
     except GithubException:
         pass
-
     else:
         contributors = [
             {

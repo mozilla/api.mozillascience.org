@@ -2,6 +2,7 @@ import json
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+
 from scienceapi.projects.serializers import ProjectSerializer
 from scienceapi.projects.tests.test_models import (
     UserFactory,
@@ -18,9 +19,7 @@ class TestProjectListView(TestCase):
         user.save()
         project = ProjectFactory()
         project.save()
-        link = ResourceLinkFactory.build(
-            project=project,
-        )
+        link = ResourceLinkFactory.build(project=project)
         link.save()
         user_project = UserProjectFactory.build(
             project=project,
