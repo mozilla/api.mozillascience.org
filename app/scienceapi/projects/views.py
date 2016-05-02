@@ -4,11 +4,11 @@ from rest_framework import filters
 
 from scienceapi.projects.models import Project, Category
 from scienceapi.projects.serializers import (
-    ProjectWithDetailsSerializer,
+    ProjectSerializer,
     CategorySerializer,
-    ProjectWithDetailsExpandUserSerializer,
-    ProjectWithDetailsExpandEventSerializer,
-    ProjectWithDetailsExpandAllSerializer,
+    ProjectUserSerializer,
+    ProjectEventSerializer,
+    ProjectExpandAllSerializer,
 )
 
 
@@ -65,7 +65,7 @@ class ProjectsListView(ListAPIView):
     - `?categories=` - Allows filtering projects by a specific category
     """
     queryset = Project.objects.all()
-    serializer_class = ProjectWithDetailsSerializer
+    serializer_class = ProjectSerializer
     pagination_class = None
     filter_backends = (
         filters.DjangoFilterBackend,
@@ -115,15 +115,15 @@ class ProjectView(RetrieveAPIView):
         if expand is not None:
             expand = expand.split(',')
             if 'users' in expand and 'events' not in expand:
-                return ProjectWithDetailsExpandUserSerializer
+                return ProjectUserSerializer
             elif 'events' in expand and 'users' not in expand:
-                return ProjectWithDetailsExpandEventSerializer
+                return ProjectEventSerializer
             elif 'events' in expand and 'users' in expand:
-                return ProjectWithDetailsExpandAllSerializer
+                return ProjectExpandAllSerializer
             else:
-                return ProjectWithDetailsSerializer
+                return ProjectSerializer
         else:
-            return ProjectWithDetailsSerializer
+            return ProjectSerializer
 
 
 class CategoryListView(ListAPIView):

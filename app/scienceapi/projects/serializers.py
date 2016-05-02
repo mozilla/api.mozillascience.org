@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from scienceapi.utility.github import GithubAPI
+from scienceapi.utility.github import get_contributors
 from scienceapi.projects.models import (
     Project,
     ResourceLink,
@@ -28,7 +28,7 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
 
 
-class ProjectWithDetailsSerializer(serializers.ModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     """
     Serializes a project with embeded information including
     list of tags, categories and links associated with that project
@@ -53,17 +53,15 @@ class ProjectWithDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = '__all__'
 
     def get_github_contributors(self, obj):
-        return GithubAPI.get_contributors(
-            obj.github_owner +
-            '/' +
-            obj.github_repository
+        return get_contributors(
+            owner=obj.github_owner,
+            repository=obj.github_repository,
         )
 
 
-class UserWithFewDetailsSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     """
     Serializes a user by including only a few details that
     might be necessary to be known when fetching a project
@@ -84,11 +82,12 @@ class UserWithFewDetailsSerializer(serializers.ModelSerializer):
         )
 
 
-class EventWithFewDetailsSerializer(serializers.ModelSerializer):
+class EventSerializer(serializers.ModelSerializer):
     """
     Serializes an event by including only a few details that
     might be necessary to be known when fetching a project
     """
+
     class Meta:
         model = Event
         fields = (
@@ -99,7 +98,7 @@ class EventWithFewDetailsSerializer(serializers.ModelSerializer):
         )
 
 
-class ProjectWithDetailsExpandEventSerializer(ProjectWithDetailsSerializer):
+class ProjectEventSerializer(ProjectSerializer):
     """
     Serializes a project with embeded information including
     list of tags, categories and links associated with that project
@@ -107,10 +106,11 @@ class ProjectWithDetailsExpandEventSerializer(ProjectWithDetailsSerializer):
     that are associated with this project and relevant details of every
     event associated with this project
     """
-    events = EventWithFewDetailsSerializer(many=True)
+
+    events = EventSerializer(many=True)
 
 
-class ProjectWithDetailsExpandUserSerializer(ProjectWithDetailsSerializer):
+class ProjectUserSerializer(ProjectSerializer):
     """
     Serializes a project with embeded information including
     list of tags, categories and links associated with that project
@@ -118,18 +118,20 @@ class ProjectWithDetailsExpandUserSerializer(ProjectWithDetailsSerializer):
     that are associated with this project and relevant details of every
     user associated with this project
     """
-    users = UserWithFewDetailsSerializer(
+
+    users = UserSerializer(
         source='userproject_set',
         many=True,
     )
 
 
-class ProjectWithDetailsExpandAllSerializer(ProjectWithDetailsSerializer):
+class ProjectExpandAllSerializer(ProjectSerializer):
     """
     Serializes a project with embeded information including
     list of tags, categories and links associated with that project
     as simple strings. It also includes relevant details of every
     user and event associated with this project
     """
-    events = EventWithFewDetailsSerializer(many=True)
-    users = UserWithFewDetailsSerializer(many=True)
+
+    events = EventSerializer(many=True)
+    users = UserSerializer(many=True)
