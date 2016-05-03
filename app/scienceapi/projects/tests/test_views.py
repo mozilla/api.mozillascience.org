@@ -47,7 +47,7 @@ class TestProjectListView(TestCase):
 
         self.assertEqual(response.status_code, 200)
         projects_data = json.loads(response.content.decode('utf-8'))
-        self.assertEqual(len(projects_data), len(self.projects))
+        self.assertEqual(len(projects_data['results']), len(self.projects))
         for project in self.projects:
             project_serializer = ProjectSerializer(project, context={
                 'request': response.wsgi_request
