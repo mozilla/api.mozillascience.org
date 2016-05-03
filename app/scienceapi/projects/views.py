@@ -1,5 +1,6 @@
 import django_filters
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import filters
 
 from scienceapi.projects.models import Project, Category
@@ -66,7 +67,7 @@ class ProjectsListView(ListAPIView):
     """
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    pagination_class = None
+    pagination_class = PageNumberPagination
     filter_backends = (
         filters.DjangoFilterBackend,
         ProjectSearchFilter,
