@@ -39,7 +39,6 @@ class ProjectSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
     links = ResourceLinkSerializer(many=True)
-    github_contributors = serializers.SerializerMethodField()
     users = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
@@ -53,6 +52,17 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
+
+
+class ProjectWithGithubSerializer(ProjectSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes a list of hyperlinks to events
+    that are associated with this project as well as hyperlinks to users
+    that are involved with the project and its github contributor list
+    """
+    github_contributors = serializers.SerializerMethodField()
 
     def get_github_contributors(self, obj):
         return get_contributors(
