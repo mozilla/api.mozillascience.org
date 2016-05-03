@@ -52,7 +52,7 @@ class TestProjectListView(TestCase):
             project_serializer = ProjectSerializer(project, context={
                 'request': response.wsgi_request
             })
-            self.assertIn(project_serializer.data, projects_data)
+            self.assertIn(project_serializer.data, projects_data['results'])
 
     def test_get_single_project_data(self):
         id = self.projects[0].id

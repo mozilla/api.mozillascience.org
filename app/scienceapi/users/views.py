@@ -1,4 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.pagination import PageNumberPagination
 
 from scienceapi.users.models import User
 from scienceapi.users.serializers import UserWithDetailsSerializer
@@ -13,7 +14,7 @@ class UsersListView(ListAPIView):
     """
     queryset = User.objects.all()
     serializer_class = UserWithDetailsSerializer
-    pagination_class = None
+    pagination_class = PageNumberPagination
 
 
 class UserView(RetrieveAPIView):
