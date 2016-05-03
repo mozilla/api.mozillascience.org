@@ -77,7 +77,7 @@ class Project(models.Model):
         ),
         help_text='Has this project been Approved or not'
     )
-    scienctific_benefits = models.TextField(
+    scientific_benefits = models.TextField(
         blank=True,
         null=True,
     )
