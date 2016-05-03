@@ -30,7 +30,7 @@ class ProjectFactory(factory.DjangoModelFactory):
     short_description = factory.LazyAttribute(
         lambda o: 'Short description for {a}'.format(a=o.name.lower())
     )
-    status = True
+    status = 'Active'
     license = 'MIT'
 
     class Meta:
