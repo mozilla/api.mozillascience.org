@@ -28,6 +28,27 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
 
 
+class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializes a user by including only a few details that
+    might be necessary to be known when fetching a project
+    """
+    id = serializers.ReadOnlyField(source='user.id')
+    username = serializers.ReadOnlyField(source='user.username')
+    github_username = serializers.ReadOnlyField(source='user.github_username')
+    avatar_url = serializers.ReadOnlyField(source='user.avatar_url')
+
+    class Meta:
+        model = UserProject
+        fields = (
+            'id',
+            'username',
+            'github_username',
+            'avatar_url',
+            'role',
+        )
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     """
     Serializes a project with embeded information including
@@ -39,10 +60,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
     links = ResourceLinkSerializer(many=True)
-    users = serializers.HyperlinkedRelatedField(
+    users = UserSerializer(
+        source='userproject_set',
         many=True,
-        read_only=True,
-        view_name='user'
     )
     events = serializers.HyperlinkedRelatedField(
         many=True,
@@ -68,27 +88,6 @@ class ProjectWithGithubSerializer(ProjectSerializer):
         return get_contributors(
             owner=obj.github_owner,
             repository=obj.github_repository,
-        )
-
-
-class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializes a user by including only a few details that
-    might be necessary to be known when fetching a project
-    """
-    id = serializers.ReadOnlyField(source='user.id')
-    username = serializers.ReadOnlyField(source='user.username')
-    github_username = serializers.ReadOnlyField(source='user.github_username')
-    avatar_url = serializers.ReadOnlyField(source='user.avatar_url')
-
-    class Meta:
-        model = UserProject
-        fields = (
-            'id',
-            'username',
-            'github_username',
-            'avatar_url',
-            'role',
         )
 
 

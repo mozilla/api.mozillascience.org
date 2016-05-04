@@ -105,8 +105,7 @@ class ProjectView(RetrieveAPIView):
     hyperlinking the relation associated
     with this project.
 
-           Currently supported values are `?expand=users`,
-           `?expand=events` and `?expand=users,events`
+           Currently supported value `?expand=events`
 
     """
     queryset = Project.objects.public()
