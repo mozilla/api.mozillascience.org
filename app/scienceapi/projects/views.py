@@ -11,6 +11,9 @@ from scienceapi.projects.serializers import (
     ProjectEventSerializer,
     ProjectExpandAllSerializer,
     ProjectWithGithubSerializer,
+    ProjectUserWithGithubSerializer,
+    ProjectEventWithGithubSerializer,
+    ProjectExpandAllWithGithubSerializer,
 )
 
 
@@ -65,9 +68,17 @@ class ProjectsListView(ListAPIView):
 
     - `?tags=` - Allows filtering projects by a specific tag
     - `?categories=` - Allows filtering projects by a specific category
+    - `?expand=` -
+    Forces the response to include basic
+    information about a relation instead of just
+    hyperlinking the relation associated
+    with this project.
+
+           Currently supported values are `?expand=users`,
+           `?expand=events` and `?expand=users,events`
+
     """
     queryset = Project.objects.public()
-    serializer_class = ProjectSerializer
     pagination_class = PageNumberPagination
     filter_backends = (
         filters.DjangoFilterBackend,
@@ -88,6 +99,21 @@ class ProjectsListView(ListAPIView):
         '=tags__name',
         '=categories__name',
     )
+
+    def get_serializer_class(self):
+        expand = self.request.query_params.get('expand')
+        if expand is not None:
+            expand = expand.split(',')
+            if 'users' in expand and 'events' not in expand:
+                return ProjectUserSerializer
+            elif 'events' in expand and 'users' not in expand:
+                return ProjectEventSerializer
+            elif 'events' in expand and 'users' in expand:
+                return ProjectExpandAllSerializer
+            else:
+                return ProjectSerializer
+        else:
+            return ProjectSerializer
 
 
 class ProjectView(RetrieveAPIView):
@@ -117,11 +143,11 @@ class ProjectView(RetrieveAPIView):
         if expand is not None:
             expand = expand.split(',')
             if 'users' in expand and 'events' not in expand:
-                return ProjectUserSerializer
+                return ProjectUserWithGithubSerializer
             elif 'events' in expand and 'users' not in expand:
-                return ProjectEventSerializer
+                return ProjectEventWithGithubSerializer
             elif 'events' in expand and 'users' in expand:
-                return ProjectExpandAllSerializer
+                return ProjectExpandAllWithGithubSerializer
             else:
                 return ProjectWithGithubSerializer
         else:
