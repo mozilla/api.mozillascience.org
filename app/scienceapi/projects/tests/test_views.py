@@ -1,7 +1,7 @@
 import json
-
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from urllib.parse import urlencode
 
 from scienceapi.projects.serializers import ProjectSerializer
 from scienceapi.projects.tests.test_models import (
@@ -43,6 +43,9 @@ class TestProjectListView(TestCase):
             self.create_user_project(user=self.user, project=project)
 
     def test_list_projects_returns_project_data(self):
+        """
+        Check if we can get a list of projects
+        """
         response = self.client.get(reverse('project-list'))
 
         self.assertEqual(response.status_code, 200)
@@ -55,6 +58,29 @@ class TestProjectListView(TestCase):
             self.assertIn(project_serializer.data, projects_data['results'])
 
     def test_get_single_project_data(self):
+        """
+        Check if we can get a single project by its `id`
+        """
+
         id = self.projects[0].id
         response = self.client.get(reverse('project', kwargs={'pk': id}))
         self.assertEqual(response.status_code, 200)
+
+    def test_projects_search_multiple_terms(self):
+        """
+        Check if we can get a list of projects based on a search
+        query containing a comma-separated list of search terms
+        """
+
+        response = self.client.get(
+            '{url}?{queryparams}'.format(
+                url=reverse('project-list'),
+                queryparams=urlencode({
+                    'search': self.projects[0].name
+                })
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        projects_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(projects_data['count'], 1)
