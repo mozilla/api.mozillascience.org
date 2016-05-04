@@ -10,6 +10,7 @@ from scienceapi.projects.serializers import (
     ProjectUserSerializer,
     ProjectEventSerializer,
     ProjectExpandAllSerializer,
+    ProjectWithGithubSerializer,
 )
 
 
@@ -122,9 +123,9 @@ class ProjectView(RetrieveAPIView):
             elif 'events' in expand and 'users' in expand:
                 return ProjectExpandAllSerializer
             else:
-                return ProjectSerializer
+                return ProjectWithGithubSerializer
         else:
-            return ProjectSerializer
+            return ProjectWithGithubSerializer
 
 
 class CategoryListView(ListAPIView):
