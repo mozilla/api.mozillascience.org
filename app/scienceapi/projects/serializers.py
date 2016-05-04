@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from scienceapi.utility.github import get_contributors
 from scienceapi.utility.common_serializers import (
-    UserSerializer,
+    UserProjectSerializer,
     EventSerializer,
 )
 from scienceapi.projects.models import (
@@ -106,7 +106,7 @@ class ProjectUserSerializer(ProjectSerializer):
     user associated with this project
     """
 
-    users = UserSerializer(
+    users = UserProjectSerializer(
         source='userproject_set',
         many=True,
     )
@@ -120,7 +120,7 @@ class ProjectUserWithGithubSerializer(ProjectWithGithubSerializer):
     that are associated with this project and relevant details of every
     user associated with this project and its github contributor list
     """
-    users = UserSerializer(
+    users = UserProjectSerializer(
         source='userproject_set',
         many=True,
     )
@@ -135,7 +135,7 @@ class ProjectExpandAllSerializer(ProjectSerializer):
     """
 
     events = EventSerializer(many=True)
-    users = UserSerializer(
+    users = UserProjectSerializer(
         source='userproject_set',
         many=True,
     )
@@ -150,7 +150,7 @@ class ProjectExpandAllWithGithubSerializer(ProjectWithGithubSerializer):
     """
 
     events = EventSerializer(many=True)
-    users = UserSerializer(
+    users = UserProjectSerializer(
         source='userproject_set',
         many=True,
     )
