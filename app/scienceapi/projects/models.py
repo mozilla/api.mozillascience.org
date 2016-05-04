@@ -26,6 +26,16 @@ class Tag(models.Model):
         return str(self.name)
 
 
+class ProjectQuerySet(models.query.QuerySet):
+    """
+    A queryset for Projects which only returns projects
+    that are 'Active', 'Completed' or 'Closed'
+    """
+
+    def public(self):
+        return self.exclude(status='Under Review')
+
+
 class Project(models.Model):
     """
     An open-source project on the Mozilla Science website
@@ -98,6 +108,8 @@ class Project(models.Model):
         related_name='projects',
         blank=True,
     )
+
+    objects = ProjectQuerySet.as_manager()
 
     class Meta:
         get_latest_by = 'date_created'

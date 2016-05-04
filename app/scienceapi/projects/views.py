@@ -66,7 +66,7 @@ class ProjectsListView(ListAPIView):
     - `?tags=` - Allows filtering projects by a specific tag
     - `?categories=` - Allows filtering projects by a specific category
     """
-    queryset = Project.objects.all()
+    queryset = Project.objects.public()
     serializer_class = ProjectSerializer
     pagination_class = PageNumberPagination
     filter_backends = (
@@ -109,7 +109,7 @@ class ProjectView(RetrieveAPIView):
            `?expand=events` and `?expand=users,events`
 
     """
-    queryset = Project.objects.all()
+    queryset = Project.objects.public()
     pagination_class = None
 
     def get_serializer_class(self):
