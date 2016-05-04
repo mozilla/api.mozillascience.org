@@ -1,13 +1,15 @@
 from rest_framework import serializers
 
 from scienceapi.utility.github import get_contributors
+from scienceapi.utility.common_serializers import (
+    UserSerializer,
+    EventSerializer,
+)
 from scienceapi.projects.models import (
     Project,
     ResourceLink,
     Category,
 )
-from scienceapi.users.models import UserProject
-from scienceapi.events.models import Event
 
 
 class ResourceLinkSerializer(serializers.ModelSerializer):
@@ -26,27 +28,6 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Category
-
-
-class UserSerializer(serializers.ModelSerializer):
-    """
-    Serializes a user by including only a few details that
-    might be necessary to be known when fetching a project
-    """
-    id = serializers.ReadOnlyField(source='user.id')
-    username = serializers.ReadOnlyField(source='user.username')
-    github_username = serializers.ReadOnlyField(source='user.github_username')
-    avatar_url = serializers.ReadOnlyField(source='user.avatar_url')
-
-    class Meta:
-        model = UserProject
-        fields = (
-            'id',
-            'username',
-            'github_username',
-            'avatar_url',
-            'role',
-        )
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -89,22 +70,6 @@ class ProjectWithGithubSerializer(ProjectSerializer):
         return get_contributors(
             owner=obj.github_owner,
             repository=obj.github_repository,
-        )
-
-
-class EventSerializer(serializers.ModelSerializer):
-    """
-    Serializes an event by including only a few details that
-    might be necessary to be known when fetching a project
-    """
-
-    class Meta:
-        model = Event
-        fields = (
-            'id',
-            'name',
-            'image_url',
-            'slug',
         )
 
 
