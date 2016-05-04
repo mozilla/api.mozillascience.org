@@ -1,11 +1,15 @@
 import factory
+from faker import Factory as FakerFactory
 
 from scienceapi.projects.models import Project, ResourceLink
 from scienceapi.users.models import UserProject, User
 
 
+faker = FakerFactory.create()
+
+
 class ProjectFactory(factory.DjangoModelFactory):
-    name = factory.LazyAttribute(lambda o: 'John')
+    name = factory.LazyAttribute(lambda o: ' '.join(faker.words(nb=4)))
     project_url = factory.LazyAttribute(lambda o: '{a}.com'.format(
         a=o.name.lower()
     ))
@@ -38,7 +42,7 @@ class ProjectFactory(factory.DjangoModelFactory):
 
 
 class UserFactory(factory.Factory):
-    username = factory.LazyAttribute(lambda o: 'John')
+    username = factory.LazyAttribute(lambda o: faker.user_name())
     designation = factory.LazyAttribute(
         lambda o: '{a}-designation'.format(a=o.username.lower())
     )
@@ -83,8 +87,8 @@ class UserProjectFactory(factory.Factory):
 
 
 class ResourceLinkFactory(factory.Factory):
-    url = factory.LazyAttribute(lambda o: 'something.com')
-    title = factory.LazyAttribute(lambda o: 'something')
+    url = factory.LazyAttribute(lambda o: faker.url())
+    title = factory.LazyAttribute(lambda o: ' '.join(faker.words(nb=4)))
     project = factory.SubFactory(ProjectFactory)
 
     class Meta:
