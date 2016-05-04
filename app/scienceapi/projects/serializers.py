@@ -60,9 +60,10 @@ class ProjectSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
     links = ResourceLinkSerializer(many=True)
-    users = UserSerializer(
-        source='userproject_set',
+    users = serializers.HyperlinkedRelatedField(
         many=True,
+        read_only=True,
+        view_name='user'
     )
     events = serializers.HyperlinkedRelatedField(
         many=True,
@@ -119,6 +120,18 @@ class ProjectEventSerializer(ProjectSerializer):
     events = EventSerializer(many=True)
 
 
+class ProjectEventWithGithubSerializer(ProjectWithGithubSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes a list of hyperlinks to users
+    that are associated with this project and relevant details of every
+    event associated with this project and its github contributor list
+    """
+
+    events = EventSerializer(many=True)
+
+
 class ProjectUserSerializer(ProjectSerializer):
     """
     Serializes a project with embeded information including
@@ -134,6 +147,20 @@ class ProjectUserSerializer(ProjectSerializer):
     )
 
 
+class ProjectUserWithGithubSerializer(ProjectWithGithubSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes a list of hyperlinks to events
+    that are associated with this project and relevant details of every
+    user associated with this project and its github contributor list
+    """
+    users = UserSerializer(
+        source='userproject_set',
+        many=True,
+    )
+
+
 class ProjectExpandAllSerializer(ProjectSerializer):
     """
     Serializes a project with embeded information including
@@ -143,4 +170,22 @@ class ProjectExpandAllSerializer(ProjectSerializer):
     """
 
     events = EventSerializer(many=True)
-    users = UserSerializer(many=True)
+    users = UserSerializer(
+        source='userproject_set',
+        many=True,
+    )
+
+
+class ProjectExpandAllWithGithubSerializer(ProjectWithGithubSerializer):
+    """
+    Serializes a project with embeded information including
+    list of tags, categories and links associated with that project
+    as simple strings. It also includes relevant details of every
+    user and event associated with this project and its github contributor list
+    """
+
+    events = EventSerializer(many=True)
+    users = UserSerializer(
+        source='userproject_set',
+        many=True,
+    )
