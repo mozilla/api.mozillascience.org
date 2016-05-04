@@ -84,3 +84,28 @@ class TestProjectListView(TestCase):
         self.assertEqual(response.status_code, 200)
         projects_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(projects_data['count'], 1)
+
+    def test_get_projects_with_expand_query(self):
+        """
+        Check if we get a list of projects with users' info expanded
+        """
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('project-list'),
+            query=urlencode({'expand': 'users'}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response_data['results'][0]['users'][0]), dict)
+
+    def test_get_project_with_expand_query(self):
+        """
+        Check if we get project with users' info expanded
+        """
+        id = self.projects[0].id
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('project', kwargs={'pk': id}),
+            query=urlencode({'expand': 'users'}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response_data['users'][0]), dict)
