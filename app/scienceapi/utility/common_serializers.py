@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id',
+            'name',
             'username',
             'github_username',
             'avatar_url',
@@ -31,6 +32,7 @@ class UserProjectSerializer(serializers.ModelSerializer):
     """
 
     id = serializers.ReadOnlyField(source='user.id')
+    name = serializers.ReadOnlyField(source='user.name')
     username = serializers.ReadOnlyField(source='user.username')
     github_username = serializers.ReadOnlyField(source='user.github_username')
     avatar_url = serializers.ReadOnlyField(source='user.avatar_url')
@@ -39,6 +41,7 @@ class UserProjectSerializer(serializers.ModelSerializer):
         model = UserProject
         fields = (
             'id',
+            'name',
             'username',
             'github_username',
             'avatar_url',
