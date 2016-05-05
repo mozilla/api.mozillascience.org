@@ -20,6 +20,11 @@ class Event(models.Model):
         blank=True,
         null=True,
     )
+    short_description = models.TextField(
+        max_length=300,
+        blank=True,
+        null=True,
+    )
     slug = models.SlugField(
         max_length=150,
         null=True,
