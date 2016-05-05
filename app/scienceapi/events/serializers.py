@@ -1,10 +1,8 @@
 from rest_framework import serializers
 
 from scienceapi.events.models import Event
-from scienceapi.utility.common_serializers import (
-    ProjectSerializer,
-    UserSerializer,
-)
+from scienceapi.projects.models import Project
+from scienceapi.utility.common_serializers import UserSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -34,6 +32,40 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProjectsForEventSerializer(serializers.ModelSerializer):
+    """
+    Serializes a project used in an event by including most details
+    that might be necessary to be known when included as a relation
+    in another object set.
+    """
+
+    tags = serializers.StringRelatedField(many=True)
+    categories = serializers.StringRelatedField(many=True)
+    leads = serializers.SerializerMethodField()
+
+    def get_leads(self, project):
+        return UserSerializer(
+            instance=project.users.filter(
+                userproject__role='Lead',
+            ),
+            many=True
+        ).data
+
+    class Meta:
+        model = Project
+        fields = (
+            'id',
+            'name',
+            'slug',
+            'image_url',
+            'institution',
+            'short_description',
+            'tags',
+            'categories',
+            'leads',
+        )
+
+
 class EventProjectSerializer(EventSerializer):
     """
     Serializes an event including a list of hyperlinks to users
@@ -41,7 +73,7 @@ class EventProjectSerializer(EventSerializer):
     relevant details of every project associated with this event
     """
 
-    projects = ProjectSerializer(many=True)
+    projects = ProjectsForEventSerializer(many=True)
 
 
 class EventUserSerializer(EventSerializer):
@@ -62,6 +94,6 @@ class EventExpandAllSerializer(EventSerializer):
     user facilitating or attending this event
     """
 
-    projects = ProjectSerializer(many=True)
+    projects = ProjectsForEventSerializer(many=True)
     attendees = UserSerializer(many=True)
     facilitators = UserSerializer(many=True)

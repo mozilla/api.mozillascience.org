@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'id',
+            'name',
             'username',
             'github_username',
             'avatar_url',
