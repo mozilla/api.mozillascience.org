@@ -3,9 +3,14 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from urllib.parse import urlencode
 
-from scienceapi.projects.serializers import ProjectSerializer
+from scienceapi.projects.serializers import (
+    ProjectSerializer,
+    ProjectEventSerializer,
+    ProjectExpandAllSerializer,
+)
+from scienceapi.users.tests.test_models import UserFactory
+from scienceapi.events.tests.test_models import EventFactory
 from scienceapi.projects.tests.test_models import (
-    UserFactory,
     ProjectFactory,
     ResourceLinkFactory,
     UserProjectFactory,
@@ -36,11 +41,27 @@ class TestProjectListView(TestCase):
         user.save()
         return user
 
+    def create_event(self):
+        event = EventFactory()
+        event.save()
+        return event
+
+    def create_project_event(self, project, event):
+        project.events.add(event)
+        project.save()
+
     def setUp(self):
         self.projects = self.create_projects()
         self.user = self.create_user()
+        self.event = self.create_event()
         for project in self.projects:
-            self.create_user_project(user=self.user, project=project)
+            self.create_user_project(
+                user=self.user, project=project
+            )
+        self.create_project_event(
+            project=self.projects[0],
+            event=self.event,
+        )
 
     def test_list_projects_returns_project_data(self):
         """
@@ -85,7 +106,7 @@ class TestProjectListView(TestCase):
         projects_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(projects_data['count'], 1)
 
-    def test_get_projects_with_expand_query(self):
+    def test_get_projects_with_expand_users_query(self):
         """
         Check if we get a list of projects with users' info expanded
         """
@@ -97,7 +118,7 @@ class TestProjectListView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(type(response_data['results'][0]['users'][0]), dict)
 
-    def test_get_project_with_expand_query(self):
+    def test_get_project_with_expand_users_query(self):
         """
         Check if we get project with users' info expanded
         """
@@ -108,4 +129,77 @@ class TestProjectListView(TestCase):
         ))
         response_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response_data['users'][0]), dict)
+
+    def test_get_projects_with_expand_events_query(self):
+        """
+        Check if we get a list of projects with users' info expanded
+        """
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('project-list'),
+            query=urlencode({'expand': 'events'}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        project = ProjectEventSerializer(self.projects[0], context={
+            'request': response.wsgi_request
+        }).data
+        response_project = response_data['results'][
+            response_data['results'].index(project)
+        ]
+        self.assertEqual(
+            type(response_project['events'][0]),
+            dict,
+        )
+
+    def test_get_project_with_expand_events_query(self):
+        """
+        Check if we get project with users' info expanded
+        """
+        id = self.projects[0].id
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('project', kwargs={'pk': id}),
+            query=urlencode({'expand': 'events'}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response_data['events'][0]), dict)
+
+    def test_get_projects_with_expand_users_and_events_query(self):
+        """
+        Check if we get a list of projects with users' info expanded
+        """
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('project-list'),
+            query=urlencode({'expand': ','.join(('events', 'users'))}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        project = ProjectExpandAllSerializer(self.projects[0], context={
+            'request': response.wsgi_request
+        }).data
+        response_project = response_data['results'][
+            response_data['results'].index(project)
+        ]
+        self.assertEqual(
+            type(response_project['events'][0]),
+            dict,
+        )
+        self.assertEqual(
+            type(response_data['results'][0]['users'][0]),
+            dict,
+        )
+
+    def test_get_project_with_expand_users_and_events_query(self):
+        """
+        Check if we get project with users' info expanded
+        """
+        id = self.projects[0].id
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('project', kwargs={'pk': id}),
+            query=urlencode({'expand': ','.join(('events', 'users'))}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(type(response_data['events'][0]), dict)
         self.assertEqual(type(response_data['users'][0]), dict)
