@@ -17,7 +17,7 @@ from scienceapi.projects.tests.test_models import (
 )
 
 
-class TestProjectListView(TestCase):
+class TestProjectView(TestCase):
 
     def create_user_project(self, user, project):
         UserProjectFactory.build(
