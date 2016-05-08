@@ -2,7 +2,10 @@ from rest_framework import serializers
 
 from scienceapi.events.models import Event
 from scienceapi.projects.models import Project
-from scienceapi.utility.common_serializers import UserSerializer
+from scienceapi.utility.common_serializers import (
+    UserSerializer,
+    ProjectLeads,
+)
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -32,7 +35,7 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProjectsForEventSerializer(serializers.ModelSerializer):
+class ProjectsForEventSerializer(serializers.ModelSerializer, ProjectLeads):
     """
     Serializes a project used in an event by including most details
     that might be necessary to be known when included as a relation
@@ -42,14 +45,6 @@ class ProjectsForEventSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     categories = serializers.StringRelatedField(many=True)
     leads = serializers.SerializerMethodField()
-
-    def get_leads(self, project):
-        return UserSerializer(
-            instance=project.users.filter(
-                userproject__role='Lead',
-            ),
-            many=True
-        ).data
 
     class Meta:
         model = Project

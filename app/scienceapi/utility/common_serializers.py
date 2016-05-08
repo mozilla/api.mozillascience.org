@@ -81,3 +81,16 @@ class ProjectSerializer(serializers.ModelSerializer):
             'slug',
             'image_url',
         )
+
+
+class ProjectLeads(object):
+    def get_leads(self, project):
+        return UserSerializer(
+            instance=project.users.filter(
+                userproject__role='Lead',
+            ),
+            many=True
+        ).data
+
+    class Meta:
+        model = Project

@@ -4,6 +4,7 @@ from scienceapi.utility.github import get_contributors
 from scienceapi.utility.common_serializers import (
     UserProjectSerializer,
     EventSerializer,
+    ProjectLeads,
 )
 from scienceapi.projects.models import (
     Project,
@@ -97,19 +98,19 @@ class ProjectEventWithGithubSerializer(ProjectWithGithubSerializer):
     events = EventSerializer(many=True)
 
 
-class ProjectUserSerializer(ProjectSerializer):
+class ProjectLeadSerializer(ProjectSerializer, ProjectLeads):
     """
     Serializes a project with embeded information including
     list of tags, categories and links associated with that project
     as simple strings. It also includes a list of hyperlinks to events
     that are associated with this project and relevant details of every
-    user associated with this project
+    user who is a Lead associated with this project
     """
+    leads = serializers.SerializerMethodField()
 
-    users = UserProjectSerializer(
-        source='userproject_set',
-        many=True,
-    )
+    class Meta:
+        model = Project
+        exclude = ['users']
 
 
 class ProjectUserWithGithubSerializer(ProjectWithGithubSerializer):
@@ -126,19 +127,20 @@ class ProjectUserWithGithubSerializer(ProjectWithGithubSerializer):
     )
 
 
-class ProjectExpandAllSerializer(ProjectSerializer):
+class ProjectExpandAllSerializer(ProjectSerializer, ProjectLeads):
     """
     Serializes a project with embeded information including
     list of tags, categories and links associated with that project
     as simple strings. It also includes relevant details of every
-    user and event associated with this project
+    user who is a lead and every event associated with this project
     """
 
+    leads = serializers.SerializerMethodField()
     events = EventSerializer(many=True)
-    users = UserProjectSerializer(
-        source='userproject_set',
-        many=True,
-    )
+
+    class Meta:
+        model = Project
+        exclude = ['users']
 
 
 class ProjectExpandAllWithGithubSerializer(ProjectWithGithubSerializer):
