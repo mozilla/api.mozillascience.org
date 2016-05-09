@@ -7,7 +7,7 @@ from scienceapi.projects.models import Project, Category
 from scienceapi.projects.serializers import (
     ProjectSerializer,
     CategorySerializer,
-    ProjectUserSerializer,
+    ProjectLeadSerializer,
     ProjectEventSerializer,
     ProjectExpandAllSerializer,
     ProjectWithGithubSerializer,
@@ -74,8 +74,8 @@ class ProjectsListView(ListAPIView):
     hyperlinking the relation associated
     with this project.
 
-           Currently supported values are `?expand=users`,
-           `?expand=events` and `?expand=users,events`
+           Currently supported values are `?expand=leads`,
+           `?expand=events` and `?expand=leads,events`
 
     """
     queryset = Project.objects.public()
@@ -104,11 +104,11 @@ class ProjectsListView(ListAPIView):
         expand = self.request.query_params.get('expand')
         if expand is not None:
             expand = expand.split(',')
-            if 'users' in expand and 'events' not in expand:
-                return ProjectUserSerializer
-            elif 'events' in expand and 'users' not in expand:
+            if 'leads' in expand and 'events' not in expand:
+                return ProjectLeadSerializer
+            elif 'events' in expand and 'leads' not in expand:
                 return ProjectEventSerializer
-            elif 'events' in expand and 'users' in expand:
+            elif 'events' in expand and 'leads' in expand:
                 return ProjectExpandAllSerializer
             else:
                 return ProjectSerializer

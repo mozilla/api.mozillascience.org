@@ -23,6 +23,7 @@ class TestProjectListView(TestCase):
         UserProjectFactory.build(
             project=project,
             user=user,
+            role='Lead'
         ).save()
 
     def create_link(self, project):
@@ -106,17 +107,17 @@ class TestProjectListView(TestCase):
         projects_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(projects_data['count'], 1)
 
-    def test_get_projects_with_expand_users_query(self):
+    def test_get_projects_with_expand_leads_query(self):
         """
-        Check if we get a list of projects with users' info expanded
+        Check if we get a list of projects with lead info expanded
         """
         response = self.client.get('{url}?{query}'.format(
             url=reverse('project-list'),
-            query=urlencode({'expand': 'users'}),
+            query=urlencode({'expand': 'leads'}),
         ))
         response_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(type(response_data['results'][0]['users'][0]), dict)
+        self.assertEqual(type(response_data['results'][0]['leads'][0]), dict)
 
     def test_get_project_with_expand_users_query(self):
         """
@@ -165,13 +166,13 @@ class TestProjectListView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(type(response_data['events'][0]), dict)
 
-    def test_get_projects_with_expand_users_and_events_query(self):
+    def test_get_projects_with_expand_leads_and_events_query(self):
         """
-        Check if we get a list of projects with users' info expanded
+        Check if we get a list of projects with leads' info expanded
         """
         response = self.client.get('{url}?{query}'.format(
             url=reverse('project-list'),
-            query=urlencode({'expand': ','.join(('events', 'users'))}),
+            query=urlencode({'expand': ','.join(('events', 'leads'))}),
         ))
         response_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
@@ -186,7 +187,7 @@ class TestProjectListView(TestCase):
             dict,
         )
         self.assertEqual(
-            type(response_data['results'][0]['users'][0]),
+            type(response_data['results'][0]['leads'][0]),
             dict,
         )
 
