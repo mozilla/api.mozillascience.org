@@ -35,19 +35,35 @@ class EventsListView(ListAPIView):
 
     **Query Parameters** -
 
+    - `?filter=` - Filter the returned events response
+
+           _Currently supported values are `?filter=past`
+           and `?filter=future`_
+
     - `?expand=` -
     Forces the response to include basic
     information about a relation instead of just
     hyperlinking the relation associated
     with this event.
 
-           Currently supported values are `?expand=users`,
-           `?expand=projects` and `?expand=users,projects`
+           _Currently supported values are `?expand=users`,
+           `?expand=projects` and `?expand=users,projects`_
 
     """
-    queryset = Event.objects.all()
+
     pagination_class = PageNumberPagination
     get_serializer_class = serializer_class
+
+    def get_queryset(self):
+        filter = self.request.query_params.get('filter')
+        queryset = Event.objects.all()
+
+        if filter == 'past':
+            return queryset.past()
+        elif filter == 'future':
+            return queryset.future()
+
+        return queryset
 
 
 class EventView(RetrieveAPIView):

@@ -1,7 +1,21 @@
 from django.db import models
+from datetime import date
 
 from scienceapi.users.models import User
 from scienceapi.projects.models import Project
+
+
+class EventQuerySet(models.query.QuerySet):
+    """
+    A queryset for Events which allows filtering events
+    that occur after the current date(inclusive) and before
+    """
+
+    def past(self):
+        return self.filter(starts_at__date__lt=date.today())
+
+    def future(self):
+        return self.filter(starts_at__date__gte=date.today())
 
 
 class Event(models.Model):
@@ -70,6 +84,8 @@ class Event(models.Model):
         related_name='events',
         blank=True,
     )
+
+    objects = EventQuerySet.as_manager()
 
     class Meta:
         get_latest_by = 'date_created'
