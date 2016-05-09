@@ -88,3 +88,31 @@ class EventView(RetrieveAPIView):
     queryset = Event.objects.all()
     pagination_class = None
     get_serializer_class = serializer_class
+
+
+class EventSlugView(RetrieveAPIView):
+    """
+    A view that permits a GET to allow listing of a single event
+    by providing its `slug` as a parameter
+
+    Route - `/events/:slug`
+
+    **Query Parameters** -
+
+    - `?expand=` -
+    Forces the response to include basic
+    information about a relation instead of just
+    hyperlinking the relation associated
+    with this event.
+
+           Currently supported values are `?expand=users`,
+           `?expand=projects` and `?expand=users,projects`
+
+    """
+
+    pagination_class = None
+    get_serializer_class = serializer_class
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        return Event.objects.slug(self.kwargs['slug'])

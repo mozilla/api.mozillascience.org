@@ -17,6 +17,22 @@ from scienceapi.projects.serializers import (
 )
 
 
+def serializer_class(self):
+    expand = self.request.query_params.get('expand')
+    if expand is not None:
+        expand = expand.split(',')
+        if 'users' in expand and 'events' not in expand:
+            return ProjectUserWithGithubSerializer
+        elif 'events' in expand and 'users' not in expand:
+            return ProjectEventWithGithubSerializer
+        elif 'events' in expand and 'users' in expand:
+            return ProjectExpandAllWithGithubSerializer
+        else:
+            return ProjectWithGithubSerializer
+    else:
+        return ProjectWithGithubSerializer
+
+
 class ProjectSearchFilter(filters.SearchFilter):
     """
     We use a custom search filter to search based on a query
@@ -136,22 +152,35 @@ class ProjectView(RetrieveAPIView):
 
     """
     queryset = Project.objects.public()
+    get_serializer_class = serializer_class
     pagination_class = None
 
-    def get_serializer_class(self):
-        expand = self.request.query_params.get('expand')
-        if expand is not None:
-            expand = expand.split(',')
-            if 'users' in expand and 'events' not in expand:
-                return ProjectUserWithGithubSerializer
-            elif 'events' in expand and 'users' not in expand:
-                return ProjectEventWithGithubSerializer
-            elif 'events' in expand and 'users' in expand:
-                return ProjectExpandAllWithGithubSerializer
-            else:
-                return ProjectWithGithubSerializer
-        else:
-            return ProjectWithGithubSerializer
+
+class ProjectSlugView(RetrieveAPIView):
+    """
+    A view that permits a GET to allow listing of a single project by providing
+    its `slug` as a parameter
+
+    **Route** - `/projects/:slug`
+
+    **Query Parameters** -
+
+    - `?expand=` -
+    Forces the response to include basic
+    information about a relation instead of just
+    hyperlinking the relation associated
+    with this project.
+
+           Currently supported values are `?expand=users`,
+           `?expand=events` and `?expand=users,events`
+    """
+
+    pagination_class = None
+    get_serializer_class = serializer_class
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        return Project.objects.public().slug(self.kwargs['slug'])
 
 
 class CategoryListView(ListAPIView):
