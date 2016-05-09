@@ -35,6 +35,9 @@ class ProjectQuerySet(models.query.QuerySet):
     def public(self):
         return self.exclude(status='Under Review')
 
+    def slug(self, slug):
+        return self.filter(slug=slug)
+
 
 class Project(models.Model):
     """

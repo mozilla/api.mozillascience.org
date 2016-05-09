@@ -17,6 +17,9 @@ class EventQuerySet(models.query.QuerySet):
     def future(self):
         return self.filter(starts_at__date__gte=date.today())
 
+    def slug(self, slug):
+        return self.filter(slug=slug)
+
 
 class Event(models.Model):
     """
