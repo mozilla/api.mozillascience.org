@@ -3,66 +3,29 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from urllib.parse import urlencode
 
+import scienceapi.utility.tests as test_utils
 from scienceapi.projects.serializers import (
     ProjectSerializer,
     ProjectEventSerializer,
     ProjectExpandAllSerializer,
 )
-from scienceapi.users.tests.test_models import UserFactory
-from scienceapi.events.tests.test_models import EventFactory
-from scienceapi.projects.tests.test_models import (
-    ProjectFactory,
-    ResourceLinkFactory,
-    UserProjectFactory,
-)
 
 
 class TestProjectView(TestCase):
 
-    def create_user_project(self, user, project):
-        UserProjectFactory.build(
-            project=project,
-            user=user,
-            role='Lead'
-        ).save()
-
-    def create_link(self, project):
-        link = ResourceLinkFactory.build(project=project)
-        link.save()
-
-    def create_projects(self):
-        projects = [ProjectFactory() for i in range(3)]
-        for project in projects:
-            project.save()
-            self.create_link(project)
-        return projects
-
-    def create_user(self):
-        user = UserFactory()
-        user.save()
-        return user
-
-    def create_event(self):
-        event = EventFactory()
-        event.save()
-        return event
-
-    def create_project_event(self, project, event):
-        project.events.add(event)
-        project.save()
-
     def setUp(self):
-        self.projects = self.create_projects()
-        self.user = self.create_user()
-        self.event = self.create_event()
+        self.projects = test_utils.create_projects()
+        self.user = test_utils.create_user()
+        self.events = test_utils.create_events()
         for project in self.projects:
-            self.create_user_project(
+            test_utils.create_user_project(
                 user=self.user, project=project
             )
-        self.create_project_event(
-            project=self.projects[0],
-            event=self.event,
-        )
+        for event in self.events:
+            test_utils.create_project_event(
+                project=self.projects[0],
+                event=event,
+            )
 
     def test_list_projects_returns_project_data(self):
         """

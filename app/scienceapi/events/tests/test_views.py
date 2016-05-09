@@ -3,71 +3,30 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from urllib.parse import urlencode
 
+import scienceapi.utility.tests as test_utils
 from scienceapi.events.serializers import (
     EventSerializer,
     EventProjectSerializer,
     EventExpandAllSerializer,
 )
-from scienceapi.users.tests.test_models import UserFactory
-from scienceapi.events.tests.test_models import EventFactory
-from scienceapi.projects.tests.test_models import (
-    ProjectFactory,
-    UserProjectFactory,
-)
 
 
 class TestEventView(TestCase):
-
-    def create_user_project(self, user, project):
-        UserProjectFactory.build(
-            project=project,
-            user=user,
-        ).save()
-
-    def create_projects(self):
-        projects = [ProjectFactory() for i in range(3)]
-        for project in projects:
-            project.save()
-        return projects
-
-    def create_user(self):
-        user = UserFactory()
-        user.save()
-        return user
-
-    def create_event(self):
-        events = [EventFactory() for i in range(3)]
-        for event in events:
-            event.save()
-        return events
-
-    def create_project_event(self, project, event):
-        project.events.add(event)
-        project.save()
-
-    def add_attendees(self, user, event):
-        event.attendees.add(user)
-        event.save()
-
-    def add_facilitators(self, user, event):
-        event.facilitators.add(user)
-        event.save()
-
     def setUp(self):
-        self.projects = self.create_projects()
-        self.user = self.create_user()
-        self.events = self.create_event()
+        self.projects = test_utils.create_projects()
+        self.user = test_utils.create_user()
+        self.events = test_utils.create_events()
         for project in self.projects:
-            self.create_user_project(
+            test_utils.create_user_project(
                 user=self.user, project=project
             )
         for event in self.events:
-            self.create_project_event(
+            test_utils.create_project_event(
                 project=self.projects[0],
                 event=event,
             )
-            self.add_attendees(self.user, event)
-            self.add_facilitators(self.user, event)
+            test_utils.add_attendees(self.user, event)
+            test_utils.add_facilitators(self.user, event)
 
     def test_list_events_returns_event_data(self):
         """
