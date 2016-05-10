@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^users/', include('scienceapi.users.urls')),
     url(r'^events/', include('scienceapi.events.urls')),
     url(r'^study-groups/', include('scienceapi.study_groups.urls')),
+    url(r'^resources/', include('scienceapi.resources.urls')),
 ]
