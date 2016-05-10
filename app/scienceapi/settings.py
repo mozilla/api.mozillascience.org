@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'scienceapi.projects',
     'scienceapi.events',
     'scienceapi.study_groups',
+    'scienceapi.resources',
     'gunicorn',
     'corsheaders',
 ]
