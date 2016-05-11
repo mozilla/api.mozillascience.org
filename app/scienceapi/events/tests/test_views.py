@@ -20,13 +20,13 @@ class TestEventView(TestCase):
             test_utils.create_user_project(
                 user=self.user, project=project
             )
-        for event in self.events:
+        for val in self.events:
             test_utils.create_project_event(
                 project=self.projects[0],
-                event=event,
+                event=self.events[val],
             )
-            test_utils.add_attendees(self.user, event)
-            test_utils.add_facilitators(self.user, event)
+            test_utils.add_attendees(self.user, self.events[val])
+            test_utils.add_facilitators(self.user, self.events[val])
 
     def test_list_events_returns_event_data(self):
         """
@@ -37,8 +37,8 @@ class TestEventView(TestCase):
         self.assertEqual(response.status_code, 200)
         event_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(len(event_data['results']), len(self.events))
-        for event in self.events:
-            event_serializer = EventSerializer(event, context={
+        for val in self.events:
+            event_serializer = EventSerializer(self.events[val], context={
                 'request': response.wsgi_request
             })
             self.assertIn(event_serializer.data, event_data['results'])
@@ -48,7 +48,7 @@ class TestEventView(TestCase):
         Check if we can get a single event by its `id`
         """
 
-        id = self.events[0].id
+        id = self.events['past'].id
         response = self.client.get(reverse('event', kwargs={'pk': id}))
         self.assertEqual(response.status_code, 200)
 
@@ -75,7 +75,7 @@ class TestEventView(TestCase):
         """
         Check if we get event with users' info expanded
         """
-        id = self.events[0].id
+        id = self.events['past'].id
         response = self.client.get('{url}?{query}'.format(
             url=reverse('event', kwargs={'pk': id}),
             query=urlencode({'expand': 'users'}),
@@ -95,7 +95,7 @@ class TestEventView(TestCase):
         ))
         response_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
-        event = EventProjectSerializer(self.events[0], context={
+        event = EventProjectSerializer(self.events['past'], context={
             'request': response.wsgi_request
         }).data
         response_event = response_data['results'][
@@ -110,7 +110,7 @@ class TestEventView(TestCase):
         """
         Check if we get event with users' info expanded
         """
-        id = self.events[0].id
+        id = self.events['past'].id
         response = self.client.get('{url}?{query}'.format(
             url=reverse('event', kwargs={'pk': id}),
             query=urlencode({'expand': 'projects'}),
@@ -129,7 +129,7 @@ class TestEventView(TestCase):
         ))
         response_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
-        event = EventExpandAllSerializer(self.events[0], context={
+        event = EventExpandAllSerializer(self.events['past'], context={
             'request': response.wsgi_request
         }).data
         response_event = response_data['results'][
@@ -152,7 +152,7 @@ class TestEventView(TestCase):
         """
         Check if we get event with users' info expanded
         """
-        id = self.events[0].id
+        id = self.events['past'].id
         response = self.client.get('{url}?{query}'.format(
             url=reverse('event', kwargs={'pk': id}),
             query=urlencode({'expand': ','.join(('projects', 'users'))}),
@@ -162,3 +162,29 @@ class TestEventView(TestCase):
         self.assertEqual(type(response_data['projects'][0]), dict)
         self.assertEqual(type(response_data['facilitators'][0]), dict)
         self.assertEqual(type(response_data['attendees'][0]), dict)
+
+    def test_get_future_events(self):
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('event-list'),
+            query=urlencode({'filter': 'future'}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        event_serializer = EventSerializer(self.events['future'], context={
+            'request': response.wsgi_request
+        })
+        self.assertEqual(len(response_data['results']), 1)
+        self.assertIn(event_serializer.data, response_data['results'])
+
+    def test_get_past_events(self):
+        response = self.client.get('{url}?{query}'.format(
+            url=reverse('event-list'),
+            query=urlencode({'filter': 'past'}),
+        ))
+        response_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        event_serializer = EventSerializer(self.events['past'], context={
+            'request': response.wsgi_request
+        })
+        self.assertEqual(len(response_data['results']), 1)
+        self.assertIn(event_serializer.data, response_data['results'])
