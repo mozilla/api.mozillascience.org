@@ -19,8 +19,8 @@ class TestUserView(TestCase):
         """
         response = self.client.get(reverse('user-list'))
 
-        self.assertEqual(response.status_code, 200)
         user_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(user_data['results']),
             len(self.users)

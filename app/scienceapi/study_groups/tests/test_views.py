@@ -19,8 +19,8 @@ class TestStudyGroupView(TestCase):
         """
         response = self.client.get(reverse('studygroup-list'))
 
-        self.assertEqual(response.status_code, 200)
         study_group_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(study_group_data['results']),
             len(self.study_groups)

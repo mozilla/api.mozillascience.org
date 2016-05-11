@@ -19,8 +19,8 @@ class TestResourceView(TestCase):
         """
         response = self.client.get(reverse('resource-list'))
 
-        self.assertEqual(response.status_code, 200)
         resource_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(len(resource_data['results']), len(self.resources))
         for resource in self.resources:
             resource_serializer = ResourceSerializer(resource, context={
