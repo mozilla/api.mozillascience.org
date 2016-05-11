@@ -7,6 +7,7 @@ import scienceapi.utility.tests as test_utils
 from scienceapi.projects.serializers import (
     ProjectSerializer,
     ProjectEventSerializer,
+    ProjectWithGithubSerializer,
     ProjectExpandAllSerializer,
 )
 
@@ -61,7 +62,13 @@ class TestProjectView(TestCase):
             'project-slug',
             kwargs={'slug': slug},
         ))
+        project_serializer = ProjectWithGithubSerializer(
+            self.projects[0],
+            context={'request': response.wsgi_request}
+        )
+        projects_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(project_serializer.data, projects_data)
 
     def test_projects_search_multiple_terms(self):
         """
