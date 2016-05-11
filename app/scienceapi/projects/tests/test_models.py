@@ -14,9 +14,7 @@ class ProjectFactory(factory.DjangoModelFactory):
     project_url = factory.LazyAttribute(lambda o: '{a}.com'.format(
         a=o.name.lower()
     ))
-    slug = factory.LazyAttribute(lambda o: '{a}-{a}'.format(
-        a=o.name.lower()
-    ))
+    slug = factory.LazyAttribute(lambda o: faker.slug())
     github_owner = factory.LazyAttribute(lambda o: '{a}-github_owner'.format(
         a=o.name.lower()
     ))

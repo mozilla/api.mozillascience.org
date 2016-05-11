@@ -52,6 +52,23 @@ class TestEventView(TestCase):
         response = self.client.get(reverse('event', kwargs={'pk': id}))
         self.assertEqual(response.status_code, 200)
 
+    def test_get_an_event_with_slug(self):
+        """
+        Check if we can get a single event by using a `slug` name
+        """
+
+        slug = self.events['past'].slug
+        response = self.client.get(reverse(
+            'event-slug',
+            kwargs={'slug': slug},
+        ))
+        event_data = json.loads(response.content.decode('utf-8'))
+        event_serializer = EventSerializer(self.events['past'], context={
+            'request': response.wsgi_request
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(event_serializer.data, event_data)
+
     def test_get_events_with_expand_users_query(self):
         """
         Check if we get a list of events with users' info expanded

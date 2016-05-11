@@ -7,6 +7,7 @@ import scienceapi.utility.tests as test_utils
 from scienceapi.projects.serializers import (
     ProjectSerializer,
     ProjectEventSerializer,
+    ProjectWithGithubSerializer,
     ProjectExpandAllSerializer,
 )
 
@@ -50,6 +51,24 @@ class TestProjectView(TestCase):
         id = self.projects[0].id
         response = self.client.get(reverse('project', kwargs={'pk': id}))
         self.assertEqual(response.status_code, 200)
+
+    def test_get_a_project_with_slug(self):
+        """
+        Check if we can get a single project by using a `slug` name
+        """
+
+        slug = self.projects[0].slug
+        response = self.client.get(reverse(
+            'project-slug',
+            kwargs={'slug': slug},
+        ))
+        project_serializer = ProjectWithGithubSerializer(
+            self.projects[0],
+            context={'request': response.wsgi_request}
+        )
+        projects_data = json.loads(response.content.decode('utf-8'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(project_serializer.data, projects_data)
 
     def test_projects_search_multiple_terms(self):
         """
