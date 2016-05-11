@@ -21,10 +21,10 @@ class TestProjectView(TestCase):
             test_utils.create_user_project(
                 user=self.user, project=project
             )
-        for event in self.events:
+        for val in self.events:
             test_utils.create_project_event(
                 project=self.projects[0],
-                event=event,
+                event=self.events[val],
             )
 
     def test_list_projects_returns_project_data(self):

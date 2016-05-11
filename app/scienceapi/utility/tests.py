@@ -1,9 +1,14 @@
+import pytz
+from faker import Factory as FakerFactory
+
 from scienceapi.users.tests.test_models import UserFactory
 from scienceapi.events.tests.test_models import EventFactory
 from scienceapi.projects.tests.test_models import (
     ProjectFactory,
     UserProjectFactory,
 )
+
+faker = FakerFactory.create()
 
 
 def create_user_project(user, project):
@@ -28,9 +33,18 @@ def create_user():
 
 
 def create_events():
-    events = [EventFactory() for i in range(3)]
-    for event in events:
-        event.save()
+    events = ({
+        'past': EventFactory(
+            starts_at=faker.date_time_this_year(
+                before_now=True, after_now=False
+            ).replace(tzinfo=pytz.utc)),
+        'future': EventFactory(
+            starts_at=faker.date_time_this_year(
+                before_now=False, after_now=True
+            ).replace(tzinfo=pytz.utc)),
+    })
+    events['past'].save()
+    events['future'].save()
     return events
 
 
