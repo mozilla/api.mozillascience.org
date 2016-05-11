@@ -51,6 +51,18 @@ class TestProjectView(TestCase):
         response = self.client.get(reverse('project', kwargs={'pk': id}))
         self.assertEqual(response.status_code, 200)
 
+    def test_get_a_project_with_slug(self):
+        """
+        Check if we can get a single project by using a `slug` name
+        """
+
+        slug = self.projects[0].slug
+        response = self.client.get(reverse(
+            'project-slug',
+            kwargs={'slug': slug},
+        ))
+        self.assertEqual(response.status_code, 200)
+
     def test_projects_search_multiple_terms(self):
         """
         Check if we can get a list of projects based on a search
