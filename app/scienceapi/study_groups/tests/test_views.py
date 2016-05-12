@@ -22,7 +22,7 @@ class TestStudyGroupView(TestCase):
         study_group_data = json.loads(response.content.decode('utf-8'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            len(study_group_data['results']),
+            len(study_group_data),
             len(self.study_groups)
         )
         for study_group in self.study_groups:
@@ -32,7 +32,7 @@ class TestStudyGroupView(TestCase):
             )
             self.assertIn(
                 study_group_serializer.data,
-                study_group_data['results']
+                study_group_data
             )
 
     def test_get_single_study_group_data(self):

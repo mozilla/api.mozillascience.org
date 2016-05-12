@@ -1,5 +1,4 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.pagination import PageNumberPagination
 
 from scienceapi.study_groups.models import StudyGroup
 from scienceapi.study_groups.serializers import StudyGroupSerializer
@@ -13,7 +12,7 @@ class StudyGroupsListView(ListAPIView):
     Route - `/study-groups`
     """
     queryset = StudyGroup.objects.all()
-    pagination_class = PageNumberPagination
+    pagination_class = None
     serializer_class = StudyGroupSerializer
 
 
