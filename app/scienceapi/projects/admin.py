@@ -33,6 +33,7 @@ class TagAdmin(admin.ModelAdmin):
     inlines = [
         TagInline,
     ]
+    ordering = ['name']
 
 
 @admin.register(Project)
