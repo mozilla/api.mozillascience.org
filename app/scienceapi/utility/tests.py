@@ -1,5 +1,6 @@
 import pytz
 from faker import Factory as FakerFactory
+import mock
 
 from scienceapi.users.tests.test_models import UserFactory
 from scienceapi.events.tests.test_models import EventFactory
@@ -9,6 +10,24 @@ from scienceapi.projects.tests.test_models import (
 )
 
 faker = FakerFactory.create()
+
+
+class GitHubMixinTest(object):
+
+    def setUp(self):
+        mock_github_patcher = mock.patch('scienceapi.utility.github.github')
+        self.mock_github = mock_github_patcher.start()
+        self.addCleanup(mock_github_patcher.stop)
+
+        mock_contributor = mock.MagicMock()
+        mock_contributor.login = 'mocked user'
+        mock_contributor.html_url = 'http://github.com/username'
+        mock_contributor.avatar_url = 'http://avatar.github.com/something.png'
+
+        self.mock_github.get_repo().get_contributors.return_value = [
+            mock_contributor
+        ]
+        self.mock_github.get_repo().get_contributors()
 
 
 def create_user_project(user, project):

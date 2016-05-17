@@ -4,6 +4,7 @@ from django.test import TestCase
 from urllib.parse import urlencode
 
 import scienceapi.utility.tests as test_utils
+from scienceapi.utility.tests import GitHubMixinTest
 from scienceapi.projects.serializers import (
     ProjectSerializer,
     ProjectEventSerializer,
@@ -12,9 +13,11 @@ from scienceapi.projects.serializers import (
 )
 
 
-class TestProjectView(TestCase):
+class TestProjectView(GitHubMixinTest, TestCase):
 
     def setUp(self):
+        super(TestProjectView, self).setUp()
+
         self.projects = test_utils.create_projects()
         self.user = test_utils.create_user()
         self.events = test_utils.create_events()

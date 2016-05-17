@@ -26,3 +26,4 @@ coverage==4.0.3
 factory_boy==2.7.0
 fake-factory==0.5.7
 pytz==2016.4
+mock==2.0.0
