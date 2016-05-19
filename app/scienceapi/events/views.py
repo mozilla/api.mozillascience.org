@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework import filters
 
 from scienceapi.events.models import Event
 from scienceapi.events.serializers import (
@@ -40,6 +41,12 @@ class EventsListView(ListAPIView):
            _Currently supported values are `?filter=past`
            and `?filter=future`_
 
+    - `?sort=` - Allows sorting of events.
+        - starts_at - `?sort=starts_at`
+
+        *To sort in descending order, prepend the field with a '-', for e.g.
+        `?sort=-starts_at`*
+
     - `?expand=` -
     Forces the response to include basic
     information about a relation instead of just
@@ -53,6 +60,13 @@ class EventsListView(ListAPIView):
 
     pagination_class = PageNumberPagination
     get_serializer_class = serializer_class
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.OrderingFilter,
+    )
+    ordering_fields = (
+        'starts_at',
+    )
 
     def get_queryset(self):
         filter = self.request.query_params.get('filter')
