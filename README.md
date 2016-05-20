@@ -48,6 +48,7 @@ This will create a simple environment for local development then you can start w
 | DATABASE_URL | URL | Required: URL to your postgres database e.g. `postgres://<USER>:<PASSWORD>@<HOSTNAME>:<PORT>/<DBNAME>`|
 | DJANGO_SECRET_KEY | String | Required: anything that is something people can't guess!|
 | DEBUG | Boolean | Required: `True` or `False` |
+|CORS_WHITELIST| String | Optional, comma separated list of domains (without space), e.g. `google.ca,.herokuapp.com`|
 
 ### Database migration
 
