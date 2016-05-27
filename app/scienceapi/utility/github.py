@@ -23,9 +23,9 @@ def get_contributors(owner, repository):
     else:
         contributors = [
             {
-                'username': contributor.login,
+                'github_username': contributor.login,
                 'url': contributor.html_url,
-                'image_url': contributor.avatar_url
+                'avatar_url': contributor.avatar_url
             }
             for contributor in response
         ]
