@@ -14,10 +14,13 @@ import environ
 
 app = environ.Path(__file__) - 1
 root = app - 1
-env = environ.Env(DEBUG=(bool, False),
-                  ALLOWED_HOSTS=(list, []),
-                  CORS_WHITELIST=(tuple, ()),
-                  GH_TOKEN=(str, None))
+env = environ.Env(
+    DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, []),
+    CORS_WHITELIST=(tuple, ()),
+    CORS_REGEX_WHITELIST=(tuple, ()),
+    GH_TOKEN=(str, None),
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
@@ -176,3 +179,4 @@ if '*' in env('CORS_WHITELIST'):
     CORS_ORIGIN_ALLOW_ALL = True
 else:
     CORS_ORIGIN_WHITELIST = env('CORS_WHITELIST')
+    CORS_ORIGIN_REGEX_WHITELIST = env('CORS_REGEX_WHITELIST')
