@@ -12,10 +12,10 @@ class EventQuerySet(models.query.QuerySet):
     """
 
     def past(self):
-        return self.filter(starts_at__date__lt=date.today())
+        return self.filter(ends_at__date__lt=date.today())
 
     def future(self):
-        return self.filter(starts_at__date__gte=date.today())
+        return self.filter(ends_at__date__gte=date.today())
 
     def slug(self, slug):
         return self.filter(slug=slug)
