@@ -77,6 +77,16 @@ docker-compose run web <your command here>
 
 NOTE: Replace `<your command here>` with an actual command, for example: `docker-compose run web echo 'hello world'`
 
+### Generating a visualization of the database schema
+
+To generate an image representing the schema of the database (which creates a `db_schema.png` file in the `app` directory) run the following command:
+
+```
+make schema
+```
+
+NOTE: Whenever you make a change to a model, please update the `app/db_schema.png` to reflect your changes. If you add a new application, add the application name to the MakeFile's `schema` command.
+
 ### Deployment
 
 The API server uses [Heroku](https://www.heroku.com/) for its deployment services, and the current workflow is that
