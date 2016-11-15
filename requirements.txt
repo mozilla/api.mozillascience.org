@@ -20,6 +20,12 @@ ipython==4.1.2
 # Augmenting requests
 pygithub==1.25.2
 
+# DB Schema Image generation
+django-extensions==1.7.4
+pygraphviz==1.4rc1
+pyparsing==2.1.10
+pydot==1.2.3
+
 # Testing
 flake8==2.5.4
 coverage==4.0.3

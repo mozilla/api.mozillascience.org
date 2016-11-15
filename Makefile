@@ -21,4 +21,7 @@ createsuperuser:
 	docker-compose run web python manage.py createsuperuser
 
 cmigrate: build
-	docker-compose run web ./manage.py makemigrations
+	docker-compose run web sh -c "./manage.py makemigrations"
+
+schema: build
+	docker-compose run web sh -c "./manage.py graph_models events projects resources study_groups users -o db_schema.png"
