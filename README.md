@@ -85,7 +85,7 @@ To generate an image representing the schema of the database (which creates a `d
 make schema
 ```
 
-NOTE: Whenever you make a change to a model, please update the `app/db_schema.png` to reflect your changes. If you add a new application, add the application name to the MakeFile's `schema` command.
+NOTE: Whenever you make a change to a model and create a migration for it, the schema visualization is automatically updated. Remember to commit these changes.
 
 ### Deployment
 

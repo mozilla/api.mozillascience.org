@@ -7,4 +7,20 @@ if __name__ == "__main__":
 
     from django.core.management import execute_from_command_line
 
-    execute_from_command_line(sys.argv)
+    args = sys.argv
+
+    execute_from_command_line(args)
+
+    if args[1] == "makemigrations":
+        print("Generating database schema diagram as `db_schema.png`")
+        execute_from_command_line([
+            "./manage.py",
+            "graph_models",
+            "users",
+            "projects",
+            "events",
+            "resources",
+            "study_groups",
+            "-o",
+            "db_schema.png"
+        ])
