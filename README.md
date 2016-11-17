@@ -33,12 +33,36 @@ Once you have both dependencies installed, you can start by forking and cloning 
 git clone https://github.com/mozilla/api.mozillascience.org.git
 ```
 
-Once you have cloned the project, make sure you run the following command first:
+## Running your application
 
+Here are a list of commands you can run that are relevant to working with this project.
+
+If you are on a UNIX-based system, run each command using:
 ```
-make cpenv
+sh run.sh <command_name>
 ```
-This will create a simple environment for local development then you can start working on the project by running this command:
+where `<command_name>` should be replaced by one of the commands in the table below.
+
+If you are on a Windows system, run each command using:
+```
+run.bat <command_name>
+```
+where `<command_name>` should be replaced by one of the commands in the table below.
+
+**NOTE:** Make sure you run the first command in this list to set up your environment before you run any of the subsequent commands.
+
+**To just start up the application, omit the `<command_name>` and run either `sh run.sh` or `run.bat` on its own accordingly.**
+
+|No.|Command|Description|
+|--------|-----|-----|
+| 1. | env | Setup your environment with the default configuration. |
+| 2. | test | Run tests for this project. |
+| 3. | makemigrations | Create migration files to reflect model changes. Run this whenever you make changes to a model. |
+| 4. | migrate | Apply migrations to the database. |
+| 5. | shell | Open up a Bash shell in the docker container to run shell commands. |
+| 6. | pyshell | Open up a Python interactive shell in the docker container. |
+| 7. | createsuperuser | Create a super user for the Django administrative interface. |
+| 8. | schema-image | Generate a database schema visualization and add it to your file tree in the `app` folder as `db_schema.png`. This is automatically done when you run the `makemigrations` command. |
 
 ## Environment Variables
 
@@ -50,22 +74,6 @@ This will create a simple environment for local development then you can start w
 | DEBUG | Boolean | Required: `True` or `False` |
 |CORS_WHITELIST| String | Optional, comma separated list of domains (without space), e.g. `google.ca,.herokuapp.com`. For allowing all domains, set to `*`|
 |CORS_REGEX_WHITELIST| String | Optional, comma separated list of domain regex patterns (without space), e.g. `^(https?://)?(\w+\.)?google\.com$,\.herokuapp\.com$`|
-
-### Database migration
-
-You'll also need run the migration script from time to time to keep up to date with the model, and to accomplish that you can simply run:
-
-```
-make migrate
-```
-
-### Start the server
-
-After you have created the environment file using `make cpenv` and ran the migration script using `make migrate` you can now run the server by simply run:
-
-```
-make up
-```
 
 ### Running python commands
 
@@ -82,7 +90,12 @@ NOTE: Replace `<your command here>` with an actual command, for example: `docker
 To generate an image representing the schema of the database (which creates a `db_schema.png` file in the `app` directory) run the following command:
 
 ```
-make schema
+sh run.sh schema-image
+```
+
+or on Windows:
+```
+run.bat schema-image
 ```
 
 NOTE: Whenever you make a change to a model and create a migration for it, the schema visualization is automatically updated. Remember to commit these changes.
