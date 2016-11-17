@@ -12,7 +12,7 @@ class EventFactory(factory.Factory):
     image_url = factory.LazyAttribute(lambda o: faker.image_url())
     description = factory.LazyAttribute(lambda o: faker.text(max_nb_chars=100))
     slug = factory.LazyAttribute(lambda o: faker.slug())
-    ends_at = factory.LazyAttribute(
+    starts_at = factory.LazyAttribute(
         lambda o: faker.date_time_this_year(
             before_now=False, after_now=True
         ).replace(tzinfo=pytz.utc)

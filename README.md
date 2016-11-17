@@ -49,20 +49,19 @@ run.bat <command_name>
 ```
 where `<command_name>` should be replaced by one of the commands in the table below.
 
-**NOTE:** Make sure you run the first command in this list to set up your environment before you run any of the subsequent commands.
-
-**To just start up the application, omit the `<command_name>` and run either `sh run.sh` or `run.bat` on its own accordingly.**
+**To just start up the application, refer to command 2 below**
 
 |No.|Command|Description|
 |--------|-----|-----|
 | 1. | env | Setup your environment with the default configuration. |
-| 2. | test | Run tests for this project. |
-| 3. | makemigrations | Create migration files to reflect model changes. Run this whenever you make changes to a model. |
-| 4. | migrate | Apply migrations to the database. |
-| 5. | shell | Open up a Bash shell in the docker container to run shell commands. |
-| 6. | pyshell | Open up a Python interactive shell in the docker container. |
-| 7. | createsuperuser | Create a super user for the Django administrative interface. |
-| 8. | schema-image | Generate a database schema visualization and add it to your file tree in the `app` folder as `db_schema.png`. This is automatically done when you run the `makemigrations` command. |
+| 2. | | Start the application by not passing in a command name. Remember to run the `env` command first before this. |
+| 3. | test | Run tests for this project. |
+| 4. | makemigrations | Create migration files to reflect model changes. Run this whenever you make changes to a model. |
+| 5. | migrate | Apply migrations to the database. |
+| 6. | shell | Open up a Bash shell in the docker container to run shell commands. |
+| 7. | pyshell | Open up a Python interactive shell in the docker container. |
+| 8. | createsuperuser | Create a super user for the Django administrative interface. |
+| 9. | schema-image | Generate a database schema visualization and add it to your file tree in the `app` folder as `db_schema.png`. This is automatically done when you run the `makemigrations` command. |
 
 ## Environment Variables
 

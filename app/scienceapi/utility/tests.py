@@ -54,11 +54,11 @@ def create_user():
 def create_events():
     events = ({
         'past': EventFactory(
-            starts_at=faker.date_time_this_year(
+            ends_at=faker.date_time_this_year(
                 before_now=True, after_now=False
             ).replace(tzinfo=pytz.utc)),
         'future': EventFactory(
-            starts_at=faker.date_time_this_year(
+            ends_at=faker.date_time_this_year(
                 before_now=False, after_now=True
             ).replace(tzinfo=pytz.utc)),
     })
