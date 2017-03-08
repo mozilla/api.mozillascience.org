@@ -70,7 +70,13 @@ class EventsListView(ListAPIView):
 
     def get_queryset(self):
         filter = self.request.query_params.get('filter')
-        queryset = Event.objects.all()
+        category = self.request.query_params.get('category')
+        if category is None:
+            category = 'all'
+        if category == 'all':
+            queryset = Event.objects.all()
+        else:
+            queryset = Event.objects.filter(category=category)
 
         if filter == 'past':
             return queryset.past()
