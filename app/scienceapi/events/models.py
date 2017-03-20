@@ -27,6 +27,22 @@ class Event(models.Model):
     Science site
     """
     name = models.CharField(max_length=300)
+    category = models.CharField(
+        max_length=50,
+        default='Project Call',
+        choices=(
+            ('Project Call', 'Project Call'),
+            ('Study Group Call', 'Study Group Call'),
+            ('Community Call', 'Community Call'),
+            ('Workshop', 'Workshop'),
+            ('Sprint', 'Sprint'),
+            ('MozFest', 'MozFest'),
+            ('Conference', 'Conference'),
+            ('Meetup', 'Meetup'),
+            ('Convening', 'Convening'),
+        ),
+        help_text='Select the type of event'
+    )
     image_url = models.URLField(
         max_length=500,
         null=True,
