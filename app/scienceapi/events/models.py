@@ -52,11 +52,15 @@ class Event(models.Model):
     description = models.TextField(
         blank=True,
         null=True,
+        help_text='This appears below the photo in the full-page '
+                  'view; should be distinct from the "short description"',
     )
     short_description = models.TextField(
         max_length=300,
         blank=True,
         null=True,
+        help_text='This appears below the photo in the card pre-view, '
+                  'and below the title in the full-page view',
     )
     slug = models.SlugField(
         max_length=150,
