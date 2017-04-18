@@ -42,5 +42,6 @@ class ProjectAdmin(admin.ModelAdmin):
         ResourceLinkInline,
         UserInline,
     ]
+    search_fields = ('name',)
 
 admin.site.register(ResourceLink)
