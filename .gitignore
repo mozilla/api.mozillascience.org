@@ -73,3 +73,6 @@ dump_*
 
 # Static files from python manage.py collectstatic
 app/staticfiles/
+
+# Media files
+app/media/
