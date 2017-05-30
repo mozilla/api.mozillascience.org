@@ -14,14 +14,38 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
+from mezzanine.conf import settings
+
+
+adminpatterns = [
+    url(r'^password_reset/$', auth_views.password_reset,
+        name='password_reset'),
+    url(r'^password_reset/done/$', auth_views.password_reset_done,
+        name='password_reset_done'),
+    url(r'^reset/done/$', auth_views.password_reset_complete,
+        name='password_reset_complete'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
+        auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^', include(admin.site.urls)),
+]
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include(adminpatterns)),
     url(r'^projects/', include('scienceapi.projects.urls')),
     url(r'^users/', include('scienceapi.users.urls')),
     url(r'^events/', include('scienceapi.events.urls')),
     url(r'^study-groups/', include('scienceapi.study_groups.urls')),
     url(r'^resources/', include('scienceapi.resources.urls')),
+    url(r'^blog/', include('scienceapi.scienceblog.urls')),
 ]
+
+
+if settings.USE_S3 is not True:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
