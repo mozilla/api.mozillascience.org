@@ -22,6 +22,11 @@ ipython==4.1.2
 # Augmenting requests
 pygithub==1.25.2
 
+# Mezzanine CMS
+Mezzanine==4.2.3
+filebrowser_s3==1.0.0
+django-storages==1.5.2
+
 # Testing
 flake8==2.5.4
 coverage==4.0.3
@@ -29,3 +34,4 @@ factory_boy==2.7.0
 fake-factory==0.5.7
 pytz==2016.4
 mock==2.0.0
+

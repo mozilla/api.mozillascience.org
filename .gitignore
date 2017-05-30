@@ -76,3 +76,6 @@ app/staticfiles/
 
 # SQLite3 databases for local development
 **/*.sqlite3
+
+# Media files
+app/media/
