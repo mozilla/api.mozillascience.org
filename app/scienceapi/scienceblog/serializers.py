@@ -24,6 +24,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     author = BlogAuthorSerializer(source='user')
     categories = BlogCategorySerializer(many=True)
     featured_image = serializers.FileField(use_url=True)
+    excerpt = serializers.CharField(source='description_from_content')
 
     class Meta:
         model = BlogPost
@@ -34,6 +35,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
             'description',
             'status',
             'publish_date',
+            'excerpt',
             'content',
             'featured_image',
             'author',
