@@ -33,14 +33,18 @@ adminpatterns = [
     url(r'^', include(admin.site.urls)),
 ]
 
-urlpatterns = [
-    url(r'^admin/', include(adminpatterns)),
+apipatterns = [
     url(r'^projects/', include('scienceapi.projects.urls')),
     url(r'^users/', include('scienceapi.users.urls')),
     url(r'^events/', include('scienceapi.events.urls')),
     url(r'^study-groups/', include('scienceapi.study_groups.urls')),
     url(r'^resources/', include('scienceapi.resources.urls')),
     url(r'^blog/', include('scienceapi.scienceblog.urls')),
+]
+
+urlpatterns = [
+    url(r'^admin/', include(adminpatterns)),
+    url(r'^api/', include(apipatterns))
 ]
 
 
