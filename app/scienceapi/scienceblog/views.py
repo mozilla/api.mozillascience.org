@@ -12,7 +12,27 @@ def blog_preview(request, *args, **kwargs):
 
 
 class BlogPostListView(ListAPIView):
+    """
+    A view that permits a GET to allow listing all blog posts
+    in the database
 
+    **Query Parameters** -
+
+    - `?search=` - Search for a blog post
+
+    - `?category=` - Limit blog posts to a particular blog category. A valid
+    `category` entry is a pre-existing blog category slug
+
+    - `?year=` - Limit blog posts to a particular year. `year` should be in
+    form YYYY eg. `?year=2017`.
+
+    - `?month=` - Given an year limit blog posts to a particular month
+    of the year. It is a valid parameters only if `year` is also given.
+    eg. `?year=2017&month=11`
+
+    - `?author=` - Given the author username limit blog posts to a particular
+    author.
+    """
     serializer_class = BlogPostSerializer
 
     def get_queryset(self):
@@ -42,7 +62,11 @@ class BlogPostListView(ListAPIView):
 
 
 class BlogPostView(RetrieveAPIView):
+    """
+    A view that permits a GET to allow listing of a single blog post
+    by providing its `id` as a parameter
 
+    """
     serializer_class = BlogPostSerializer
 
     def get_queryset(self):
@@ -50,7 +74,11 @@ class BlogPostView(RetrieveAPIView):
 
 
 class BlogPostSlugView(RetrieveAPIView):
+    """
+    A view that permits a GET to allow listing of a single blog post
+    by providing its `slug` as a parameter
 
+    """
     serializer_class = BlogPostSerializer
     lookup_field = 'slug'
 
@@ -59,6 +87,10 @@ class BlogPostSlugView(RetrieveAPIView):
 
 
 class BlogCategoryListView(ListAPIView):
+    """
+    A view that permits a GET to allow listing of all blog categories
+
+    """
 
     serializer_class = BlogCategorySerializer
     queryset = BlogCategory.objects.all()
