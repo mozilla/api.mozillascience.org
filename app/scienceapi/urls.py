@@ -44,7 +44,8 @@ apipatterns = [
 
 urlpatterns = [
     url(r'^admin/', include(adminpatterns)),
-    url(r'^api/', include(apipatterns))
+    url(r'^api/', include(apipatterns)),
+    url(r'^', include(apipatterns))
 ]
 
 
