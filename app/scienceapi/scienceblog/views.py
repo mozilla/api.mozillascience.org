@@ -83,7 +83,9 @@ class BlogPostSlugView(RetrieveAPIView):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        return BlogPost.objects.filter(slug=self.kwargs['slug'])
+        query = BlogPost.objects.published(for_user=self.request.user)
+        query = query.filter(slug=self.kwargs['slug'])
+        return query
 
 
 class BlogCategoryListView(ListAPIView):
