@@ -140,6 +140,12 @@ ADMIN_REMOVAL = [
 
 BLOG_USE_FEATURED_IMAGE = True
 
+# We hit https://github.com/stephenmcd/mezzanine/issues/1748
+# in Mezzanine 4.2.3 while importing blogs from wordpress,
+# so removing thumbnails filter.
+# To Do: Remove this after mezzanine update.
+RICHTEXT_FILTERS = ()
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
