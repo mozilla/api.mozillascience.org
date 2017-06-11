@@ -31,6 +31,10 @@ Mezzanine==4.2.3
 filebrowser_s3==1.0.0
 django-storages==1.5.2
 
+# Wordpress blog import
+beautifulsoup4==4.6.0
+feedparser==5.2.1
+
 # Testing
 flake8==2.5.4
 coverage==4.0.3

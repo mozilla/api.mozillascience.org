@@ -76,3 +76,6 @@ app/staticfiles/
 
 # Media files
 app/media/
+
+# Log containing unmodified image urls during blog import
+app/import_log.txt
