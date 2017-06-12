@@ -43,6 +43,7 @@ class Event(models.Model):
         ),
         help_text='Select the type of event'
     )
+
     image_url = models.URLField(
         max_length=500,
         null=True,
@@ -70,15 +71,24 @@ class Event(models.Model):
         help_text='Slug appended to the Mozilla Science event\'s '
                   'url that represents this event',
     )
+    is_virtual = models.BooleanField(
+        default=False,
+        help_text='When selected, events will appear on site converted '
+                  'to a visitor\'s local time.',
+        verbose_name='Virtual Event'
+    )
+
+    timezone = models.CharField(
+        max_length=40,
+        help_text='Timezone of the place where the event will be held. '
+                  'If the event is virtual, use whatever time zone you like '
+                  'and enter the times in that zone.'
+    )
+
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     starts_at = models.DateTimeField()
     ends_at = models.DateTimeField()
-    timezone = models.CharField(
-        max_length=10,
-        null=True,
-        blank=True,
-    )
     location = models.CharField(
         max_length=300,
         null=True,

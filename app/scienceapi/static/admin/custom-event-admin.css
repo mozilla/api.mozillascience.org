@@ -1,0 +1,17 @@
+/* Removes Timezone warning from admin */
+.timezonewarning {
+    display: none;
+}
+
+/* Remove relative datetime pickers */
+.datetimeshortcuts > * {
+    display: none;
+}
+
+a[id^='calendarlink'], a[id^='clocklink'] {
+    display: inline;
+}
+
+.calendar-shortcuts {
+    display: none;
+}
