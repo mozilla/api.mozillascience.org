@@ -14,11 +14,13 @@ superusers = [
 normalusers = [
     {
         'username': 'user1',
-        'password': 'dummy'
+        'password': 'dummy',
+        'is_staff': True
     },
     {
         'username': 'user2',
-        'password': 'dummy'
+        'password': 'dummy',
+        'is_staff': True
     }
 ]
 
