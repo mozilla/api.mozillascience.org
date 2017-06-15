@@ -64,6 +64,7 @@ INSTALLED_APPS = list(filter(None, [
     'storages',
     'gunicorn',
     'corsheaders',
+    'social_django',
 
     'scienceapi.users',
     'scienceapi.projects',
@@ -107,6 +108,17 @@ MIDDLEWARE_CLASSES = [
     "mezzanine.pages.middleware.PageMiddleware",
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"

@@ -43,3 +43,6 @@ fake-factory==0.5.7
 pytz==2016.4
 mock==2.0.0
 
+# Github Authentication
+social-auth-app-django==1.2.0
+
