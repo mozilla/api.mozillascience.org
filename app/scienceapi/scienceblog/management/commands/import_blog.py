@@ -1,4 +1,6 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
+
 from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.encoding import force_text
@@ -14,7 +16,7 @@ from xml.dom import Node
 
 from mezzanine.blog.models import BlogPost, BlogCategory
 from mezzanine.conf import settings
-from mezzanine.core.models import CONTENT_STATUS_DRAFT
+from mezzanine.core.models import CONTENT_STATUS_DRAFT, SitePermission
 from mezzanine.generic.models import Keyword, ThreadedComment
 from mezzanine.utils.html import decode_entities
 
@@ -195,6 +197,11 @@ class Command(BaseCommand):
         is local.
         """
         url = options.get('url')
+        site = Site.objects.get_current()
+
+        blog_group, created = Group.objects.get_or_create(name='blog authors')
+        if created:
+            blog_group.save()
 
         try:
             import feedparser
@@ -218,7 +225,17 @@ class Command(BaseCommand):
                 user.first_name = self.get_text(author, 'wp:author_first_name')
                 user.last_name = self.get_text(author, 'wp:author_last_name')
                 user.set_unusable_password()
-                user.save()
+            if blog_group not in user.groups.all():
+                user.groups.add(blog_group)
+            user.is_staff = True
+            user.save()
+
+            siteperms, created = SitePermission.objects.get_or_create(
+                user=user)
+            if site not in siteperms.sites.all():
+                siteperms.sites.add(site)
+            siteperms.save()
+
             # This would be used when associating blogs to their user objects
             users[wp_login_id] = user
 
