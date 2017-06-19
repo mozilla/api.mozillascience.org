@@ -26,6 +26,4 @@ env:
     - DJANGO_SECRET_KEY=secret
     - DATABASE_URL=postgres://postgres:5432@localhost:5432/mozillascience
     - USE_S3=False
-    - SOCIAL_AUTH_GITHUB_KEY=key
-    - SOCIAL_AUTH_GITHUB_SECRET=secret
-
+    - GITHUB_AUTH=False

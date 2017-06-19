@@ -18,6 +18,7 @@ env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
     USE_S3=(bool, True),
+    GITHUB_AUTH=(bool, True),
     CORS_WHITELIST=(tuple, ()),
     CORS_REGEX_WHITELIST=(tuple, ()),
     GH_TOKEN=(str, None),
@@ -42,6 +43,8 @@ ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 GH_TOKEN = env('GH_TOKEN')
 
+GITHUB_AUTH = env('GITHUB_AUTH')
+
 # Application definition
 
 INSTALLED_APPS = list(filter(None, [
@@ -64,7 +67,7 @@ INSTALLED_APPS = list(filter(None, [
     'storages',
     'gunicorn',
     'corsheaders',
-    'social_django',
+    'social_django' if GITHUB_AUTH else None,
 
     'scienceapi.users',
     'scienceapi.projects',
@@ -114,11 +117,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
 
-SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
-SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
-
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+if GITHUB_AUTH:
+    SOCIAL_AUTH_GITHUB_KEY = env('SOCIAL_AUTH_GITHUB_KEY')
+    SOCIAL_AUTH_GITHUB_SECRET = env('SOCIAL_AUTH_GITHUB_SECRET')
+    LOGIN_REDIRECT_URL = '/'
+    LOGOUT_REDIRECT_URL = '/'
 
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"

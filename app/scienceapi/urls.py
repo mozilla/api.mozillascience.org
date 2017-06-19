@@ -42,11 +42,13 @@ apipatterns = [
     url(r'^blog/', include('scienceapi.scienceblog.urls')),
 ]
 
-authpatterns = [
-    url(r'^logout/', auth_views.logout,
-        {'next_page': settings.LOGOUT_REDIRECT_URL}),
-    url(r'^', include('social_django.urls'))
-]
+authpatterns = []
+if settings.GITHUB_AUTH:
+    authpatterns += [
+        url(r'^logout/', auth_views.logout,
+            {'next_page': settings.LOGOUT_REDIRECT_URL}),
+        url(r'^', include('social_django.urls'))
+    ]
 
 urlpatterns = [
     url(r'^admin/', include(adminpatterns)),
