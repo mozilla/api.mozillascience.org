@@ -1,0 +1,48 @@
+version: "{build}"
+
+branches:
+
+  only:
+
+  - master
+
+clone_depth: 1
+
+build: false
+
+environment:
+  DEBUG: True
+  DJANGO_SECRET_KEY: secret
+  DATABASE_URL: postgres://postgres:Password12!@localhost:5432/mozillascience
+
+  matrix:
+
+    - PYTHON: "C:\\Python36"
+      PYTHON_VERSION: "3.6.1"
+      PYTHON_ARCH: "32"
+
+init:
+  - "ECHO %PYTHON% %PYTHON_VERSION% %%PYTHON_ARCH"
+
+install:
+  - "virtualenv scienceapi -p %PYTHON%/python.exe"
+  - "./scienceapi/Scripts/activate"
+  - PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
+  - "pip install -r requirements.txt"
+
+services:
+  - postgresql
+
+before_test:
+  - "./scienceapi/Scripts/activate"
+  - SET PGUSER=postgres
+  - SET PGPASSWORD=Password12!
+  - PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
+  - createdb mozillascience
+  - python app/manage.py migrate
+
+test_script:
+  - "./scienceapi/Scripts/activate"
+  - "flake8 app --config=./app/tox.ini"
+  - "python app/manage.py test"
+

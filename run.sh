@@ -42,10 +42,6 @@ else
   then
     eval "$PYTHON_CMD createsuperuser"
 
-  elif [ $cmd == "schema-image" ]
-  then
-    eval "$PYTHON_CMD graph_models events projects resources study_groups users -o db_schema.png"
-
   else
     echo "ERROR: Unknown command"
   fi

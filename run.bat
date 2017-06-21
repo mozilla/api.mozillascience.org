@@ -38,10 +38,6 @@ IF "%1"=="" (
   docker-compose run web python manage.py createsuperuser
   GOTO :EOF
 
-:CMD_schema-image
-  docker-compose run web python manage.py graph_models events projects resources study_groups users -o db_schema.png
-  GOTO :EOF
-
 :ERROR
   ECHO ERROR: Unknown command
   GOTO :EOF
