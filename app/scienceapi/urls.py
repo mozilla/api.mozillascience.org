@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-
+from .views import bootstrap
 from mezzanine.conf import settings
 
 
@@ -34,6 +34,7 @@ adminpatterns = [
 ]
 
 apipatterns = [
+    url(r'^bootstrap/$', bootstrap),
     url(r'^projects/', include('scienceapi.projects.urls')),
     url(r'^users/', include('scienceapi.users.urls')),
     url(r'^events/', include('scienceapi.events.urls')),

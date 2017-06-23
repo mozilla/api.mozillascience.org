@@ -179,6 +179,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'scienceapi.wsgi.application'
 
+USE_X_FORWARDED_HOST = True
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
