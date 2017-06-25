@@ -62,6 +62,7 @@ target/
 .ipynb_checkpoints
 
 # testing files
+app/import_log.txt
 dump_*
 *.sqlite3
 
@@ -73,3 +74,6 @@ dump_*
 
 # Static files from python manage.py collectstatic
 app/staticfiles/
+
+# Media files
+app/media/
