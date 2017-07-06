@@ -1,30 +1,24 @@
 # Django Framework specific
-Django==1.9.5
+Django==1.10.7
 django-environ==0.4.0
-djangorestframework==3.3.3
-drfdocs==0.0.9
-gunicorn==19.4.5
-django_filter==0.13.0
+djangorestframework==3.6.3
+drfdocs==0.0.11
+gunicorn==19.6.0
+django_filter==1.0.2
 markdown==2.6.6
 
 # CORS
-django-cors-headers==1.1.0
+django-cors-headers==2.0.2
 
 # Serve static files
-whitenoise==3.0
+whitenoise==3.3.0
 
-psycopg2==2.6.1
+psycopg2==2.6.2
 six==1.10.0
 ipython==4.1.2
 
 # Augmenting requests
 pygithub==1.25.2
-
-# DB Schema Image generation
-django-extensions==1.7.4
-pygraphviz==1.4rc1
-pyparsing==2.1.10
-pydot==1.2.3
 
 # Testing
 flake8==2.5.4
