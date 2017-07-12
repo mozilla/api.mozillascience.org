@@ -2,9 +2,20 @@
   "name": "api.mozillascience.org",
   "description": "API server for science.mozilla.org",
   "addons": [
-    "heroku-postgresql"
+    "heroku-postgresql:hobby-dev"
   ],
   "scripts": {
-    "postdeploy": "python app/manage.py migrate"
+    "postdeploy": "sh scripts/postdeploy.sh"
+  },
+  "env": {
+    "HEROKU_PARENT_APP_NAME": {},
+    "DJANGO_SECRET_KEY": {
+      "generator": "secret"
+    },
+    "GH_TOKEN": {},
+    "DEBUG": {},
+    "ALLOWED_HOSTS": {},
+    "CORS_WHITELIST": {},
+    "CORS_REGEX_WHITELIST": {}
   }
 }
