@@ -70,6 +70,9 @@ As this is a Python/Django project, we also support additional commands that mig
 | DEBUG | Boolean | Required: `True` or `False` |
 |CORS_WHITELIST| String | Optional, comma separated list of domains (without space), e.g. `google.ca,.herokuapp.com`. For allowing all domains, set to `*`|
 |CORS_REGEX_WHITELIST| String | Optional, comma separated list of domain regex patterns (without space), e.g. `^(https?://)?(\w+\.)?google\.com$,\.herokuapp\.com$`|
+|USE_S3| Boolean | default is True. Do we want to use s3 for media uploads? |
+
+Also envs `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_CUSTOM_DOMAIN`, `AWS_LOCATION`, `FILEBROWSER_DIRECTORY` are **required** if `USE_S3` is True. For more info see [filebrowser_s3 documentation](https://github.com/Pomax/filebrowser_s3#variables-documentation)
 
 ### Deployment
 
