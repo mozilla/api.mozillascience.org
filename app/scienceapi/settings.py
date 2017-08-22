@@ -142,7 +142,7 @@ BLOG_USE_FEATURED_IMAGE = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [root('templates')],
+        'DIRS': [app('templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

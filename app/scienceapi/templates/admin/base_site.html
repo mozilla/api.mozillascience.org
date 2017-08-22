@@ -10,9 +10,12 @@
     {% url "displayable_links_js" as link_list_url %}
     {% url "admin:index" as admin_index_url %}
     {% get_current_language as LANGUAGE_CODE %}
+
+    <!-- override: start #630 -->
     {% comment %}
     window.__home_link = '<a href="{% url "home" %}">{% trans "View site" %}</a>';
     {% endcomment %}
+    <!-- override: end #630 -->
     window.__home_link = '';
     window.__csrf_token = '{{ csrf_token }}';
     window.__admin_keywords_submit_url = '{% url "admin_keywords_submit" %}';
