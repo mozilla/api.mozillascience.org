@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import environ
+import dj_database_url
+import os
 
 app = environ.Path(__file__) - 1
 root = app - 1
@@ -20,12 +22,20 @@ env = environ.Env(
     CORS_WHITELIST=(tuple, ()),
     CORS_REGEX_WHITELIST=(tuple, ()),
     GH_TOKEN=(str, None),
+    DATABASE_URL=(str, None),
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = root()
 
 APP_DIR = app()
+
+
+# Read in the environment
+if os.path.exists('.env') is True:
+    environ.Env.read_env('.env')
+else:
+    environ.Env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -100,8 +110,15 @@ WSGI_APPLICATION = 'scienceapi.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db("DATABASE_URL"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': root('db.sqlite3'),
+    }
 }
+
+DATABASE_URL = env('DATABASE_URL')
+if DATABASE_URL is not None:
+    DATABASES['default'].update(dj_database_url.config())
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 

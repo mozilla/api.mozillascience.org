@@ -73,3 +73,6 @@ dump_*
 
 # Static files from python manage.py collectstatic
 app/staticfiles/
+
+# SQLite3 databases for local development
+**/*.sqlite3
