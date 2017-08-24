@@ -68,6 +68,7 @@ INSTALLED_APPS = list(filter(None, [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
 
+    'django_filters',
     'rest_framework',
     'rest_framework_docs',
     'storages',
