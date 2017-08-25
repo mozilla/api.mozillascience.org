@@ -27,6 +27,7 @@ pygithub==1.25.2
 Mezzanine==4.2.3
 filebrowser_s3==1.0.0
 django-storages==1.5.2
+boto3==1.4.4
 
 # Testing
 flake8==2.5.4
