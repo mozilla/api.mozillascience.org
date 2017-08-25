@@ -25,3 +25,4 @@ env:
     - DEBUG=True
     - DJANGO_SECRET_KEY=secret
     - DATABASE_URL=postgres://postgres:5432@localhost:5432/mozillascience
+    - USE_S3=False
