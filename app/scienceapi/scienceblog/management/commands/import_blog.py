@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.encoding import force_text
 from django.utils.html import linebreaks, strip_tags
+from django.db import transaction
 
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -123,6 +124,7 @@ class Command(BaseCommand):
                 fields[field_name] = value
         return fields
 
+    @transaction.atomic
     def handle(self, *args, **options):
         """
         Processes the converted data into the Mezzanine database correctly.
@@ -230,7 +232,7 @@ class Command(BaseCommand):
         for entry in feed['entries']:
             if entry.wp_post_type == 'attachment':
                 attachments[entry.wp_post_id] = self.correct_url(
-                    entry.wp_attachment_url, return_rel=True)
+                    entry.wp_attachment_url, rel=True)
 
         for (i, entry) in enumerate(feed['entries']):
 
@@ -320,7 +322,7 @@ class Command(BaseCommand):
             post = post.replace(match.group(0), meta)
         return post
 
-    def correct_url(self, url, return_rel=False):
+    def correct_url(self, url, rel=False):
         """
         A utility function to test and convert wordpress image src.
 
@@ -335,17 +337,15 @@ class Command(BaseCommand):
         """
         url_pattern = re.compile(r'https?:\/\/mozscienceblog\.wpengine\.com'
                                  r'\/wp-content\/uploads\/(?P<rel_path>.+)')
-
-        upload = settings.MEDIA_URL
         return_string = url
         with open('import_log.txt', 'a') as e:
             m = re.match(url_pattern, url)
             if m:
                 r_path = m.group('rel_path')
-                if return_rel:
+                if(rel):
                     return_string = r_path
                 else:
-                    return_string = (upload + r_path)
+                    return_string = (settings.MEDIA_URL + r_path)
             else:
                 e.write(url + '\n')
         return return_string
