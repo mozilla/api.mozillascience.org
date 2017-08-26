@@ -293,6 +293,29 @@ else:
     CORS_ORIGIN_WHITELIST = env('CORS_WHITELIST')
     CORS_ORIGIN_REGEX_WHITELIST = env('CORS_REGEX_WHITELIST')
 
+# LOGGING
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] [%(levelname)s] %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True
+        }
+    },
+}
 
 ####################
 # DYNAMIC SETTINGS #
