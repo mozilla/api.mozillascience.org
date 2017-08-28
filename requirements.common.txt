@@ -23,6 +23,10 @@ ipython==4.1.2
 # Augmenting requests
 pygithub==1.25.2
 
+# Wordpress blog import
+beautifulsoup4==4.6.0
+feedparser==5.2.1
+
 # Mezzanine CMS
 Mezzanine==4.2.3
 filebrowser_s3==1.0.0

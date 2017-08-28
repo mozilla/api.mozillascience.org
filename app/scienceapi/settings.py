@@ -140,6 +140,12 @@ ADMIN_REMOVAL = [
 
 BLOG_USE_FEATURED_IMAGE = True
 
+# We hit https://github.com/stephenmcd/mezzanine/issues/1748
+# in Mezzanine 4.2.3 while importing blogs from wordpress,
+# so removing thumbnails filter.
+# To Do: Remove this after mezzanine update.
+RICHTEXT_FILTERS = ()
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -287,6 +293,29 @@ else:
     CORS_ORIGIN_WHITELIST = env('CORS_WHITELIST')
     CORS_ORIGIN_REGEX_WHITELIST = env('CORS_REGEX_WHITELIST')
 
+# LOGGING
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '[%(asctime)s] [%(levelname)s] %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True
+        }
+    },
+}
 
 ####################
 # DYNAMIC SETTINGS #
