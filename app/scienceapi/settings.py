@@ -317,6 +317,9 @@ LOGGING = {
     },
 }
 
+print(AWS_SECRET_ACCESS_KEY)
+print(AWS_ACCESS_KEY_ID)
+
 ####################
 # DYNAMIC SETTINGS #
 ####################
