@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.encoding import force_text
 from django.utils.html import linebreaks, strip_tags
+from django.db import transaction
 
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -123,6 +124,7 @@ class Command(BaseCommand):
                 fields[field_name] = value
         return fields
 
+    @transaction.atomic
     def handle(self, *args, **options):
         """
         Processes the converted data into the Mezzanine database correctly.
