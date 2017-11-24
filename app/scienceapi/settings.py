@@ -24,6 +24,8 @@ env = environ.Env(
     CORS_REGEX_WHITELIST=(tuple, ()),
     GH_TOKEN=(str, None),
     DATABASE_URL=(str, None),
+    SECURE_SSL_REDIRECT=(bool, False),
+    SECURE_SSL_HOST(str, None),
 )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -51,6 +53,9 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 GH_TOKEN = env('GH_TOKEN')
+
+SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT')
+SECURE_SSL_HOST = env('SECURE_SSL_HOST')
 
 # Application definition
 
