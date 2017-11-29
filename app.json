@@ -16,6 +16,9 @@
     "DEBUG": {},
     "ALLOWED_HOSTS": {},
     "CORS_WHITELIST": {},
-    "CORS_REGEX_WHITELIST": {}
+    "CORS_REGEX_WHITELIST": {},
+    "SECURE_SSL_REDIRECT": {
+      "value": true
+    }
   }
 }
