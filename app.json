@@ -13,9 +13,10 @@
       "generator": "secret"
     },
     "GH_TOKEN": {},
-    "DEBUG": {},
+    "DEBUG": "False",
     "ALLOWED_HOSTS": {},
     "CORS_WHITELIST": {},
-    "CORS_REGEX_WHITELIST": {}
+    "CORS_REGEX_WHITELIST": {},
+    "USE_S3": "False"
   }
 }
