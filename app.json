@@ -17,8 +17,6 @@
     "ALLOWED_HOSTS": {},
     "CORS_WHITELIST": {},
     "CORS_REGEX_WHITELIST": {},
-    "SECURE_SSL_REDIRECT": {
-      "value": true
-    }
+    "SECURE_SSL_REDIRECT": "True"
   }
 }
