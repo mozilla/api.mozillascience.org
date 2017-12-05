@@ -13,10 +13,11 @@
       "generator": "secret"
     },
     "GH_TOKEN": {},
-    "DEBUG": {},
+    "DEBUG": "False",
     "ALLOWED_HOSTS": {},
     "CORS_WHITELIST": {},
     "CORS_REGEX_WHITELIST": {},
-    "SECURE_SSL_REDIRECT": "True"
+    "SECURE_SSL_REDIRECT": "True",
+    "USE_S3": "False"
   }
 }
