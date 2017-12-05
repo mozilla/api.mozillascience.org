@@ -17,6 +17,7 @@
     "ALLOWED_HOSTS": {},
     "CORS_WHITELIST": {},
     "CORS_REGEX_WHITELIST": {},
+    "SECURE_SSL_REDIRECT": "True",
     "USE_S3": "False"
   }
 }

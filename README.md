@@ -68,9 +68,11 @@ As this is a Python/Django project, we also support additional commands that mig
 | DATABASE_URL | URL | Required: URL to your postgres database e.g. `postgres://<USER>:<PASSWORD>@<HOSTNAME>:<PORT>/<DBNAME>`|
 | DJANGO_SECRET_KEY | String | Required: anything that is something people can't guess!|
 | DEBUG | Boolean | Required: `True` or `False` |
-|CORS_WHITELIST| String | Optional, comma separated list of domains (without space), e.g. `google.ca,.herokuapp.com`. For allowing all domains, set to `*`|
-|CORS_REGEX_WHITELIST| String | Optional, comma separated list of domain regex patterns (without space), e.g. `^(https?://)?(\w+\.)?google\.com$,\.herokuapp\.com$`|
-|USE_S3| Boolean | default is True. Do we want to use s3 for media uploads? |
+| CORS_WHITELIST | String | Optional, comma separated list of domains (without space), e.g. `google.ca,.herokuapp.com`. For allowing all domains, set to `*`|
+| CORS_REGEX_WHITELIST | String | Optional, comma separated list of domain regex patterns (without space), e.g. `^(https?://)?(\w+\.)?google\.com$,\.herokuapp\.com$`|
+| USE_S3| Boolean | default is True. Do we want to use s3 for media uploads? |
+| SECURE_SSL_REDIRECT | Boolean | Redirect insecure requests to HTTPS. Defaults to `False` |
+| SECURE_SSL_HOST | String | The host that the secure redirect should use. If not set, the host is not modified |
 
 Also envs `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_CUSTOM_DOMAIN`, `AWS_LOCATION`, `FILEBROWSER_DIRECTORY` are **required** if `USE_S3` is True. For more info see [filebrowser_s3 documentation](https://github.com/Pomax/filebrowser_s3#variables-documentation)
 
