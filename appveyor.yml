@@ -19,11 +19,11 @@ environment:
   matrix:
 
     - PYTHON: "C:\\Python36"
-      PYTHON_VERSION: "3.6.1"
+      PYTHON_VERSION: "3.6.5"
       PYTHON_ARCH: "32"
 
 init:
-  - "ECHO %PYTHON% %PYTHON_VERSION% %%PYTHON_ARCH"
+  - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
 
 install:
   - "virtualenv scienceapi -p %PYTHON%/python.exe"

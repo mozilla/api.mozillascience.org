@@ -5,7 +5,7 @@
     "heroku-postgresql:hobby-dev"
   ],
   "scripts": {
-    "postdeploy": "sh scripts/postdeploy.sh"
+    "postdeploy": "python app/manage.py seedusers"
   },
   "env": {
     "HEROKU_PARENT_APP_NAME": {},
