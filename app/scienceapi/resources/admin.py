@@ -7,4 +7,5 @@ from .models import Resource, Tag
 class ResourceAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
+
 admin.site.register(Tag)

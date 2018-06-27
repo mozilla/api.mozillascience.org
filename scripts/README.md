@@ -12,7 +12,7 @@ The language is not crucial here since these scripts will most likely be run by 
 
 ### Using Python scripts
 
-It is recommended that you use Python 3.5 or above and pip 1.7 or above and setup a virtual environment to install your dependencies into. This can be done by running the following commands in the current folder.
+It is recommended that you use Python 3.6 or above and pip 10 or above and setup a virtual environment to install your dependencies into. This can be done by running the following commands in the current folder.
 
 1. `pyvenv env` or on Windows `C:\Python35\python C:\Python35\Tools\Scripts\pyvenv.py env`
 

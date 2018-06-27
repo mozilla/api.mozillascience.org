@@ -115,7 +115,7 @@ class Project(models.Model):
     objects = ProjectQuerySet.as_manager()
 
     class Meta:
-        get_latest_by = 'date_created'
+        ordering = ['date_created']
 
     def __str__(self):
         return str(self.name)

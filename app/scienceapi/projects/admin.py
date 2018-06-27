@@ -44,4 +44,5 @@ class ProjectAdmin(admin.ModelAdmin):
     ]
     search_fields = ('name',)
 
+
 admin.site.register(ResourceLink)
