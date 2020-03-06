@@ -1,3 +1,5 @@
+**[This project was sunsetted](https://blog.mozilla.org/foundation-archive/mozilla-science/news-from-mozilla-science-lab/) in September 2018. More information can be found at the [ScienceLab wiki](https://wiki.mozilla.org/ScienceLab).**
+
 # api.mozillascience.org
 django API application for mozillascience.org
 
