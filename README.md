@@ -5,7 +5,15 @@ django API application for mozillascience.org
 
 [![Build Status](https://travis-ci.org/mozilla/api.mozillascience.org.svg?branch=master)](https://travis-ci.org/mozilla/api.mozillascience.org)
 
-## Getting started
+Table of Contents (ToC)
+=======================
+
+* [Getting Started](#getting-started)
+* [Setup](#setup)
+* [Environment Variables](#environment variables)
+* [Deployment](#deployment)
+
+## Getting Started
 
 To start working with the API server locally, you will need to make sure you have the following prerequisite dependencies installed.
 
